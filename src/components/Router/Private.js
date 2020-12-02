@@ -4,7 +4,7 @@ import PropsTypes from "prop-types";
 
 export default function PrivateRoute({ isAuth, children, ...rest }) {
     if (!isAuth)
-        return <Redirect to='/signin' />;
+        return <Redirect to="/signin" />;
 
     return (
         <Route {...rest}>

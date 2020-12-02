@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+
 import useDebounce from "hooks/useDebounce";
 import { search, clearSearch } from "actions/search";
 
@@ -44,15 +46,20 @@ export default function Search({ setSearching, searching }) {
     }, [debounce, dispatch]);
 
     return (
-        <StyledSearch className='p-2 border-bottom'>
+        <StyledSearch className="p-2 border-bottom">
             <input
-                type='text'
-                className='form-control'
-                placeholder='Buscar'
+                type="text"
+                className="form-control"
+                placeholder="Buscar"
                 onChange={handleSearch}
                 value={value}
             />
-            {searching && <i className='text-primary ml-2 material-icons i-close' onClick={handleClear}>clear</i>}
+            {searching && <i className="text-primary ml-2 material-icons i-close" onClick={handleClear}>clear</i>}
         </StyledSearch>
     );
 }
+
+Search.propTypes = {
+    setSearching: PropTypes.func.isRequired,
+    searching: PropTypes.bool.isRequired
+};

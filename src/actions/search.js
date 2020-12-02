@@ -1,15 +1,18 @@
 import types from "types";
-import ajax from "helpers/ajax";
+import request from "helpers/request";
 
 export function search(value) {
-    return async (dispatch, getState) => {
-        const { auth: { user }, chats: { collection } } = getState();
+    return async (dispatch, getState) => {        
+        const {
+            auth: { user },
+            chats: { collection }
+        } = getState();
 
-        const chats = collection.filter(chat => chat.user.username.includes(value));
-        const ignore = chats.map(chat => chat.user.username).concat(user.username);
+        const chats = collection.filter(chat => chat.to.username.includes(value));
+        const ignore = chats.map(chat => chat.to.username).concat(user.username);
 
         try {
-            const response = await ajax.post("/api/auth/search", { value, ignore });
+            const response = await request.post("/auth/search", { value, ignore });
             dispatch(setSearch(chats, response.data));
         }
 

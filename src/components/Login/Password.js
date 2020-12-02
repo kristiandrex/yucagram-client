@@ -11,19 +11,19 @@ export default function Password() {
 
     return (
         <Layout>
-            <h4 className='text-center'>¿Olvidaste la contraseña?</h4>
+            <h4 className="text-center">¿Olvidaste la contraseña?</h4>
             <hr />
             <form onSubmit={handleOnSubmit}>
-                <div className='form-group'>
-                    <input type='text' className='form-control' placeholder='Correo electrónico' ref={ref} />
+                <div className="form-group">
+                    <input type="text" className="form-control" placeholder="Correo electrónico" ref={ref} />
                 </div>
-                <button className='btn btn-primary btn-block'>Recuperar contraseña</button>
+                <button className="btn btn-primary btn-block">Recuperar contraseña</button>
             </form>
-            <div className='btn-group btn-block mt-3'>
-                <Link className='btn btn-link btn-sm' to='/signin'>
+            <div className="btn-group btn-block mt-3">
+                <Link className="btn btn-link btn-sm" to="/signin">
                     Iniciar sesión
                 </Link>
-                <Link className='btn btn-link btn-sm' to='/signup'>
+                <Link className="btn btn-link btn-sm" to="/signup">
                     Regístrate
                 </Link>
             </div>

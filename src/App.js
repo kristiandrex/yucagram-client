@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
 import Router from "components/Router/Router";
-import store from "./store";
+import store from "store";
 
 const GlobalStyled = createGlobalStyle`
   html,

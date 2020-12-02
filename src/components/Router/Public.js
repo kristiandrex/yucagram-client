@@ -4,7 +4,7 @@ import PropsTypes from "prop-types";
 
 export default function PublicRoute({ isAuth, children, ...rest }) {
     if (isAuth)
-        return <Redirect to='/' />;
+        return <Redirect to="/" />;
 
     return (
         <Route {...rest}>

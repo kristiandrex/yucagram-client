@@ -64,18 +64,18 @@ export default function AvatarChooser() {
     };
 
     return (
-        <StyledAvatarChooser className='mb-4'>
+        <StyledAvatarChooser className="mb-4">
             {show && <Crop src={src} onCrop={handleCrop} onDiscard={handleDiscard} />}
-            <img src={avatar} alt={username} width='125px' height='125px' />
+            <img src={avatar} alt={username} width="125px" height="125px" />
             <div>
                 <input
-                    type='file'
-                    name='avatar'
-                    id='avatar'
+                    type="file"
+                    name="avatar"
+                    id="avatar"
                     onChange={handleChange}
                     ref={ref}
                 />
-                <label htmlFor='avatar' className='material-icons bg-primary p-2'>edit</label>
+                <label htmlFor="avatar" className="material-icons bg-primary p-2">edit</label>
             </div>
         </StyledAvatarChooser>
     );

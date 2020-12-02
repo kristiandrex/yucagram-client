@@ -1,6 +1,6 @@
 # CHAT-MERN-TS-CLIENT
 
-Chat created with Typescript and MERN Stack.
+Chat client created with Typescript and MERN Stack.
 
 ## Resources
 

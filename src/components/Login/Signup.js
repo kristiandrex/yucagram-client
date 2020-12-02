@@ -2,9 +2,11 @@ import React, { Fragment } from "react";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import axios from "axios";
+import PropTypes from "prop-types";
+
 import Layout from "./Layout";
 import validate from "helpers/validateSignup";
+import request from "helpers/request";
 import { signup } from "actions/auth";
 
 export default function Signup() {
@@ -12,7 +14,7 @@ export default function Signup() {
 
     const onSubmit = async (values) => {
         try {
-            const response = await axios.post("/api/signup", values);
+            const response = await request.post("/signup", values);
             dispatch(signup(response.data));
         }
 
@@ -38,46 +40,53 @@ function Form({ handleSubmit, handleChange, values, errors }) {
     return (
         <Fragment>
             <form noValidate onSubmit={handleSubmit}>
-                <div className='form-group'>
+                <div className="form-group">
                     <input
-                        type='text'
-                        name='username'
-                        placeholder='Nombre de usuario'
+                        type="text"
+                        name="username"
+                        placeholder="Nombre de usuario"
                         className={errors.username ? "form-control is-invalid" : "form-control"}
                         onChange={handleChange}
                         value={values.username}
                     />
-                    {errors.username && <div className='invalid-feedback d-block'>{errors.username}</div>}
+                    {errors.username && <div className="invalid-feedback d-block">{errors.username}</div>}
                 </div>
-                <div className='form-group'>
+                <div className="form-group">
                     <input
-                        type='email'
-                        name='email'
-                        placeholder='Correo electrónico'
+                        type="email"
+                        name="email"
+                        placeholder="Correo electrónico"
                         className={errors.email ? "form-control is-invalid" : "form-control"}
                         onChange={handleChange}
                         value={values.email}
                     />
-                    {errors.email && <div className='invalid-feedback d-block'>{errors.email}</div>}
+                    {errors.email && <div className="invalid-feedback d-block">{errors.email}</div>}
                 </div>
-                <div className='form-group'>
+                <div className="form-group">
                     <input
-                        type='password'
-                        name='password'
-                        placeholder='Contraseña'
+                        type="password"
+                        name="password"
+                        placeholder="Contraseña"
                         className={errors.password ? "form-control is-invalid" : "form-control"}
                         onChange={handleChange}
                         value={values.password}
                     />
-                    {errors.password && <div className='invalid-feedback d-block'>{errors.password}</div>}
+                    {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
                 </div>
-                <button className='btn btn-primary btn-block' type='submit'>
+                <button className="btn btn-primary btn-block" type="submit">
                     Regístrate
                 </button>
             </form>
-            <Link className='btn btn-link btn-sm btn-block mt-3' to='/signin'>
+            <Link className="btn btn-link btn-sm btn-block mt-3" to="/signin">
                 Inicia sesión
             </Link>
         </Fragment>
     );
 }
+
+Form.propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    handleChange: PropTypes.func.isRequired,
+    values: PropTypes.object.isRequired,
+    errors: PropTypes.object.isRequired
+};

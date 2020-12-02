@@ -4,24 +4,28 @@ import PropTypes from "prop-types";
 import Avatar from "components/Avatar";
 
 const StyledDiv = styled.div`
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 0.5rem;
+    display: flex;
     align-items: center;
+    gap: .5rem;
     color: #fff;
 
-    .btn-options {
-        cursor: pointer;
-        outline: none;
+    .username {
+        font-weight: bold;
+    }
+    
+    .options {
+        margin-left: auto;
     }
 `;
 
-export default function ProfileCard({ children, user }) {
+export default function ProfileCard({ user, children }) {
     return (
-        <StyledDiv className='p-2 bg-primary profile-card'>
+        <StyledDiv className="p-2 bg-primary">
             <Avatar user={user} />
-            <span className='font-weight-bold'>{user.username}</span>
-            {children}
+            <span className="username">{user.username}</span>
+            <div className="options">
+                {children}
+            </div>
         </StyledDiv>
     );
 }

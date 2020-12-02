@@ -21,9 +21,9 @@ export default function MyProfile() {
             <ProfileCard user={user} >
                 <Dropdown>
                     <Dropdown.Toggle>
-                        <i className='material-icons text-white'>more_vert</i>
+                        <i className="material-icons text-white">more_vert</i>
                     </Dropdown.Toggle>
-                    <Dropdown.Menu className='text-center'>
+                    <Dropdown.Menu className="text-center">
                         <Dropdown.Item onClick={handleSignout}>Cerrar sesión</Dropdown.Item>
                         <Dropdown.Item onClick={handleShow}>Editar perfil</Dropdown.Item>
                     </Dropdown.Menu>

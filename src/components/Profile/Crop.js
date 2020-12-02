@@ -60,7 +60,7 @@ export default function Crop({ src, onDiscard, onCrop }) {
 
     return createPortal(
         <StyledCrop>
-            <div className='wrapper bg-light'>
+            <div className="wrapper bg-light">
                 <ReactImageCrop
                     src={src}
                     crop={crop}
@@ -69,11 +69,11 @@ export default function Crop({ src, onDiscard, onCrop }) {
                     onImageLoaded={handleLoaded}
                 />
             </div>
-            <div className='buttons p-3 bg-light border-top text-center'>
-                <button className='btn btn-outline-secondary mr-2' onClick={onDiscard}>
+            <div className="buttons p-3 bg-light border-top text-center">
+                <button className="btn btn-outline-secondary mr-2" onClick={onDiscard}>
           Descartar
                 </button>
-                <button className='btn btn-primary' onClick={handleCrop}>
+                <button className="btn btn-primary" onClick={handleCrop}>
           Guardar
                 </button>
             </div>

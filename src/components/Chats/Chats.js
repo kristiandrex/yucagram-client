@@ -11,10 +11,10 @@ const StyledEmpty = styled.div`
 `;
 
 
-export default function Chats({ searching }) {
-    const chats = useSelector((state) => searching ? state.results.chats : state.chats.collection);
+export default function Chats() {
+    const chats = useSelector((state) => state.chats.collection);
 
-    if (!searching && chats.length === 0) {
+    if (chats.length === 0) {
         return (
             <StyledEmpty>
                 <span>No hay chats</span>

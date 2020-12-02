@@ -1,3 +1,4 @@
+import { SERVER_URL } from "config";
 import io from "socket.io-client";
 
 let instance;
@@ -5,11 +6,7 @@ let instance;
 function connect() {
     if (!instance) {
         const token = localStorage.getItem("token");
-
-        instance = io.connect({
-            path: "/api/socket",
-            query: { token }
-        });
+        instance = io(SERVER_URL, { query: { token } });
     }
 
     return instance;

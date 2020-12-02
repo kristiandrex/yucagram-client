@@ -1,11 +1,15 @@
-import ajax from "helpers/ajax";
+import request from "helpers/request";
 import types from "types";
 
 export function loadChats() {
     return async (dispatch) => {
         try {
-            const response = await ajax.get("/api/auth/chats");
-            dispatch({ type: types.LOAD_CHATS, payload: response.data });
+            const response = await request.get("/auth/chats");
+
+            dispatch({
+                type: types.LOAD_CHATS,
+                payload: response.data
+            });
         }
 
         catch (error) {
@@ -22,7 +26,35 @@ export function setCurrent(payload) {
 }
 
 export function createChat(user) {
-    return function (dispatch) {
-        console.log(user);
+    return async function (dispatch) {
+        try {
+            const response = await request.post("/auth/chats", { user });
+
+            dispatch({
+                type: types.CREATE_CHAT,
+                payload: response.data
+            });
+        }
+
+        catch (error) {
+            console.log(error);
+        }
+    };
+}
+
+export function addChat(user) {
+    return async function (dispatch) {
+        try {
+            const response = await request.get(`/auth/chats/${user}`);
+
+            dispatch({
+                type: types.ADD_CHAT,
+                payload: response.data
+            });
+        }
+
+        catch (error) {
+            console.log(error);
+        }
     };
 }

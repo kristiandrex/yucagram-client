@@ -1,65 +1,56 @@
-import React from "react";
+import React, { useEffect, useContext, useCallback } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-import Badge from "react-bootstrap/Badge";
 import PropTypes from "prop-types";
-import { setCurrent } from "actions/chats";
+
 import LastMessage from "./LastMessage";
 import Avatar from "components/Avatar";
+import { SocketContext } from "components/Socket";
+import { setCurrent } from "actions/chats";
+import { messageSeen } from "actions/messages";
 
 const StyledChat = styled.div`
 	cursor: pointer;
-	display: grid;
-	align-items: center;
-	grid-template-areas:  "avatar username badge options" "avatar message badge options";
-	grid-template-columns: 47px 1fr auto auto;
-	grid-column-gap: .5rem;
-	position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: .5rem;
 
-	.avatar {
-	  grid-area: avatar;
+    .preview {
+        overflow: hidden;
+    }
 
-		img {
-			width: 47px;
-			height: 47px;
-			border-radius: 100%;
-		}
-	}
-
-	.username {
+    .username {
         font-weight: bold;
-		grid-area: username;
-	}
-
-	.last-message {
-		grid-area: message;
-	}
-
-	.badge {
-		grid-area: badge;
-	}
-
-	.dropdown {
-		grid-area: options;
-		cursor: pointer;
-	}
+    }
 `;
 
 export default function Chat({ chat, index }) {
-    const HIDE_BADGE = chat.unread === 0;
+    const length = chat.messages.length - 1;
+    const last = length >= 0 ? chat.messages[length] : null;
 
+    const socket = useContext(SocketContext);
     const dispatch = useDispatch();
+    const onClick = () => dispatch(setCurrent(index));
 
-    const handleOpenChat = () => {
-        dispatch(setCurrent(chat, index));
-    };
+    const callback = useCallback((message) => {
+        if (message.from === chat.from) {
+            dispatch(messageSeen(message, index));
+        }
+    }, [chat.from, index, dispatch]);
+
+    useEffect(() => {
+        socket.on("MESSAGE_SEEN", callback);
+    }, [socket, callback]);
 
     return (
-        <StyledChat className='border-bottom p-2' onClick={handleOpenChat}>
-            <Avatar user={chat.user} />
-            <span className='username'>{chat.user.username}</span>
-            <LastMessage />
-            <Badge hidden={HIDE_BADGE} variant='primary'>{chat.unread}</Badge>
+        <StyledChat className="border-bottom p-2" onClick={onClick}>
+            <Avatar user={chat.to} />
+            <div className="preview">
+                <span className="username">{chat.to.username}</span>
+                <LastMessage message={last} isOut={last.from === chat.from} />
+            </div>
+            <span className="badge badge-primary" hidden={!chat.unread}>{chat.unread}</span>
         </StyledChat>
     );
 }

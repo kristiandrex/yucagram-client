@@ -1,5 +1,5 @@
-import ajax from "helpers/ajax";
-import types from "../types";
+import request from "helpers/request";
+import types from "types";
 
 export function verifyAuth() {
     const token = localStorage.getItem("token");
@@ -20,8 +20,8 @@ export function signup(payload) {
 
 function signinToken() {
     return async (dispatch) => {
-        try {
-            const response = await ajax.get("/api/auth");
+        try {   
+            const response = await request.get("/auth");
             const token = localStorage.getItem("token");
 
             dispatch(setUser({ user: response.data, token }));
@@ -49,7 +49,7 @@ export function signout() {
 
 export async function changeAvatar(data) {
     try {
-        const response = await ajax.post("/api/auth/upload/avatar", data);
+        const response = await request.post("/api/auth/upload/avatar", data);
 
         return {
             type: types.SET_AVATAR,

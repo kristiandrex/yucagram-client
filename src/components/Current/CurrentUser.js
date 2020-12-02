@@ -1,6 +1,8 @@
 import * as React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
+import PropTypes from "prop-types";
+
 import ProfileCard from "components/Profile/ProfileCard";
 import { createChat } from "actions/chats";
 
@@ -25,13 +27,17 @@ export default function CurrentUser({ user }) {
     return (
         <Styled>
             <ProfileCard user={user} />
-            <div className='wrapper'>
-                <div className='card'>
-                    <div className='card-body'>
-                        <button className='btn btn-primary' onClick={handleOnClick}>Agregar chat</button>
+            <div className="wrapper">
+                <div className="card">
+                    <div className="card-body">
+                        <button className="btn btn-primary" onClick={handleOnClick}>Agregar chat</button>
                     </div>
                 </div>
             </div>
         </Styled>
     );
 }
+
+CurrentUser.propTypes = {
+    user: PropTypes.object.isRequired
+};

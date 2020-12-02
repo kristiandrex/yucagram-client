@@ -14,8 +14,8 @@ export default function Options({ children, onClick }) {
 
     return (
         <Dropdown onClick={handleClick}>
-            <Dropdown.Toggle variant='ligth'>
-                <span className='material-icons'>more_vert</span>
+            <Dropdown.Toggle variant="ligth">
+                <span className="material-icons">more_vert</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {children}
