@@ -1,22 +1,21 @@
 import React, { createContext, useEffect } from "react";
 import PropTypes from "prop-types";
-import socket from "helpers/socket";
+import socket from "util/socket";
 
 export const SocketContext = createContext(null);
 
 export default function Socket({ children }) {
-    useEffect(() => {
-        socket.connect();
-        return () => socket.disconnect();
-    }, []);
+  useEffect(() => {
+    return () => socket.disconnect();
+  }, []);
 
-    return (
-        <SocketContext.Provider value={socket.connect()}>
-            {children}
-        </SocketContext.Provider>
-    );
+  return (
+    <SocketContext.Provider value={socket.get()}>
+      {children}
+    </SocketContext.Provider>
+  );
 }
 
 Socket.propTypes = {
-    children: PropTypes.element.isRequired
+  children: PropTypes.element.isRequired
 };

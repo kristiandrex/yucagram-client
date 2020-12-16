@@ -12,6 +12,7 @@
     "formik": "^2.1.4",
     "http-proxy-middleware": "^1.0.5",
     "lodash": "^4.17.20",
+    "normalizr": "^3.6.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.0.1",
     "react-dom": "^16.13.1",
@@ -31,7 +32,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix ."
+    "lint": "eslint --fix .",
+    "lint:css": "stylelint ./src/**/*.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -50,6 +52,10 @@
   },
   "devDependencies": {
     "eslint": "^7.14.0",
-    "eslint-plugin-react": "^7.21.5"
+    "eslint-plugin-react": "^7.21.5",
+    "stylelint": "^13.8.0",
+    "stylelint-config-recommended": "^3.0.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.10.0"
   }
 }

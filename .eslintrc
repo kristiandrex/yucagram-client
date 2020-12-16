@@ -1,0 +1,29 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true
+  },
+  "extends": [
+    "react-app"
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "react"
+  ],
+  "rules": {
+    "react/prop-types": 1,
+    "no-unused-vars": 1,
+    "indent": [1, 2, { "SwitchCase": 1 }],
+    "linebreak-style": [1,"windows"],
+    "quotes": [1, "double"],
+    "semi": [1, "always"],
+    "jsx-quotes": [1, "prefer-double"]
+  }
+}

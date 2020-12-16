@@ -7,21 +7,21 @@ import ProfileCard from "components/Profile/ProfileCard";
 import WriteMessage from "components/Messages/WriteMessage";
 
 const Styled = styled.div`
-    height: 100%;
-    display: grid;
-    grid-template-rows: auto 1fr auto;
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 `;
 
 export default function CurrentChat({ chat }) {
-    return (
-        <Styled>
-            <ProfileCard user={chat.to} />
-            <Messages messages={chat.messages} />
-            <WriteMessage />
-        </Styled>
-    );
+  return (
+    <Styled>
+      <ProfileCard user={chat.to} />
+      <Messages chat={chat._id} />
+      <WriteMessage />
+    </Styled>
+  );
 }
 
 CurrentChat.propTypes = {
-    chat: PropTypes.object.isRequired
+  chat: PropTypes.object.isRequired
 };

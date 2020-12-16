@@ -1,61 +1,27 @@
-import React, { forwardRef } from "react";
-import styled from "styled-components";
+import React, { memo } from "react";
 import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
+import MessageBubble from "./MessageBubble";
+import MessageUnread from "./MessageUnread";
 
-const Styled = styled.div`
-    display: flex;
-    padding-bottom: 8px;
+function Message({ _id }) {
+  const message = useSelector((state) => state.messages.byId[_id]);
+  const user = useSelector((state) => state.auth.user._id);
+  const own = user === message.from;
 
-    &:first-child{
-        padding-top: 8px;
-    }
+  if (!own && !message.seen) {
+    return <MessageUnread message={message} />;
+  }
 
-    &.own {
-        justify-content: flex-end;
-        
-        .message {
-            background-color: #cce5ff;
-        }
-    }
+  return <MessageBubble message={message} own={own} />;
+}
 
-    .message {
-        background: #e2e3e5;
-        max-width: 75%;
-    }
-
-    .details {
-        text-align: right;
-
-        .date,
-        .state {
-            display: inline-block;
-            font-size: .85rem;
-        }
-    }
-`;
-
-const Message = forwardRef(({ own, message, children }, ref) => {
-    const date = new Date(message.date);
-
-    return (
-        <Styled className={own ? "message-row own" : "message-row"} ref={ref}>
-            <div className="message shadow-sm p-2 rounded">
-                <div className="content">
-                    {message.text}
-                </div>
-                <div className="details">
-                    <div className="date ml-2 mr-1">{date.getHours()}:{date.getMinutes()}</div>
-                    {children}
-                </div>
-            </div>
-        </Styled>
-    );
-});
-
-Message.propTypes= { 
-    own: PropTypes.bool.isRequired,
-    message: PropTypes.object.isRequired,
-    children: PropTypes.element.isRequired,
+Message.propTypes = {
+  _id: PropTypes.string
 };
 
-export default Message;
+function areEqual(prevProps, nextProps) {
+  return prevProps._id === nextProps._id;
+}
+
+export default memo(Message, areEqual);

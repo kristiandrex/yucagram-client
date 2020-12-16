@@ -21,10 +21,10 @@ const GlobalStyled = createGlobalStyle`
 `;
 
 export default function App() {
-    return (
-        <Provider store={store}>
-            <GlobalStyled />
-            <Router />
-        </Provider>
-    );
+  return (
+    <Provider store={store}>
+      <GlobalStyled />
+      <Router />
+    </Provider>
+  );
 }

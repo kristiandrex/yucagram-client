@@ -5,43 +5,47 @@ import { useDispatch } from "react-redux";
 import Lateral from "./Lateral/Lateral";
 import Current from "./Current/Current";
 import { SocketContext } from "components/Socket";
-import { messageIn } from "actions/messages";
+import { messageIn, readMessage } from "actions/messages";
 
 const StyledHome = styled.div`
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
 
-    .no-outline {
-        outline: none;
+  .no-outline {
+    outline: none;
+  }
+
+  .dropdown-toggle {
+    outline: none;
+    box-shadow: none;
+    color: #212529;
+
+    &::after {
+      display: none;
     }
-
-    .dropdown-toggle {
-        outline: none;
-        box-shadow: none;
-        color: #212529;
-
-        &::after {
-            display: none;
-        }
-    }
+  }
 `;
 
 export default function Home() {
-    const socket = useContext(SocketContext);
-    const dispatch = useDispatch();
+  const socket = useContext(SocketContext);
+  const dispatch = useDispatch();
 
-    useEffect(() => {
-        socket.on("SEND_MESSAGE", (message) => {
-            dispatch(messageIn(message));
-        });
-    }, [socket, dispatch]);
+  useEffect(() => {
+    socket.on("SEND_MESSAGE", (payload) => {
+      dispatch(messageIn(payload));
+    });
 
-    return (
-        <StyledHome className="row no-gutters">
-            <Lateral />
-            <Current />
-        </StyledHome>
-    );
+    socket.on("READ_MESSAGE", (payload) => {
+      dispatch(readMessage(payload));
+    });
+  }, [socket, dispatch]);
+
+  return (
+    <StyledHome className="row no-gutters">
+      <Lateral />
+      <Current />
+    </StyledHome>
+  );
 }

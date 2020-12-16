@@ -9,34 +9,34 @@ import Chats from "components/Chats/Chats";
 import { loadChats } from "actions/chats";
 
 const LateralStyled = styled.div`
-    background: #fff;
-    display: flex;
-    flex-direction: column;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
 
-    @media (max-width: 576px) {
-        border: none !important;
-        overflow-x: hidden;
-    }
+  @media (max-width: 576px) {
+    border: none !important;
+    overflow-x: hidden;
+  }
 `;
 
 export default function Lateral() {
-    const [searching, setSearching] = useState(false);
-    const dispatch = useDispatch();
+  const [searching, setSearching] = useState(false);
+  const dispatch = useDispatch();
 
-    const handleSearching = (value) => {
-        setSearching(value);
-    };
+  const handleSearching = (value) => {
+    setSearching(value);
+  };
 
-    useEffect(() => {
-        dispatch(loadChats());
-    }, [dispatch]);
+  useEffect(() => {
+    dispatch(loadChats());
+  }, [dispatch]);
 
-    return (
-        <LateralStyled className="col-lg-3 col-sm-4 col-12 border-right">
-            <MyProfile />
-            <Search setSearching={handleSearching} searching={searching} />
-            <Users />
-            <Chats />
-        </LateralStyled>
-    );
+  return (
+    <LateralStyled className="col-lg-3 col-sm-4 col-12 border-right">
+      <MyProfile />
+      <Search setSearching={handleSearching} searching={searching} />
+      <Users />
+      <Chats />
+    </LateralStyled>
+  );
 }

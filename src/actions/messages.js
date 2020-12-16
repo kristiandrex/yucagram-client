@@ -1,31 +1,44 @@
 import types from "types";
 import { addChat } from "./chats";
 
-export function messageIn(message) {
-    return function (dispatch, getState) {
-        const index = getState().chats.collection.findIndex(chat => chat.to._id === message.from);
+/**
+ * 
+ * @param {*} payload 
+ */
+export function messageIn(payload) {
+  return function (dispatch, getState) {
+    const chat = getState().chats.byId[payload.chat];
 
-        if (index === -1) {
-            return dispatch(addChat(message.from));
-        }
+    if (!chat) {
+      return dispatch(addChat(payload.message.from));
+    }
 
-        return dispatch(addMessage(message, index));
-    };
+    return dispatch(addMessage(payload.message, chat._id));
+  };
 }
 
-export function addMessage(message, index) {
-    return {
-        type: types.ADD_MESSAGE,
-        payload: {
-            message,
-            index
-        }
-    };
+/**
+ * 
+ * @param {*} message 
+ * @param {*} chat  _id
+ */
+export function addMessage(message, chat) {
+  return {
+    type: types.ADD_MESSAGE,
+    payload: {
+      message,
+      chat
+    }
+  };
 }
 
-export function messageSeen(message, chat) {
-    return {
-        type: types.MESSAGE_SEEN,
-        payload: { message, chat }
-    };
+/**
+ * 
+ * @param {*} payload 
+ */
+export function readMessage(payload) {
+  return {
+    type: types.READ_MESSAGE,
+    payload
+  };
 }

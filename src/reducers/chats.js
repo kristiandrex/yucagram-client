@@ -1,116 +1,117 @@
 import types from "types";
 
-function pushMessage(state, payload) {
-    const iterator = (chat, index) => {
-        if (index === payload.index) {
-            const unread = payload.message.from === chat.from ? chat.unread : chat.unread + 1;
-
-            return {
-                ...chat,
-                unread,
-                messages: [...chat.messages, payload.message],
-            };
-        }
-
-        return chat;
-    };
-
-    return state.collection.map(iterator);
-}
-
-function updateMessage(collection, payload) {
-    const iteratorM = (message) => {
-        if (message._id === payload.message._id) {
-            return { ...message, seen: true };
-        }
-
-        return message;
-    };
-
-    const iteratorC = (chat, index) => {
-        if (payload.chat === index) {
-            const unread = payload.message.from === chat.from ? chat.unread : chat.unread - 1;
-
-            return {
-                ...chat,
-                unread,
-                messages: chat.messages.map(iteratorM)
-            };
-        }
-
-        return chat;
-    };
-
-    return collection.map(iteratorC);
-}
-
 const initialState = {
-    collection: [],
-    current: null
+  allIds: [],
+  byId: {},
+  current: null
 };
 
 export default function reducer(state = initialState, action) {
-    switch (action.type) {
-        case types.LOAD_CHATS: {
-            return {
-                ...state,
-                collection: action.payload
-            };
-        }
+  switch (action.type) {
+    case types.LOAD_CHATS: {
+      const chats = action.payload.chats;
 
-        case types.SIGNOUT: {
-            return initialState;
-        }
-
-        case types.SET_CURRENT: {
-            return { ...state, current: action.payload };
-        }
-
-        case types.CLOSE_CURRENT: {
-            return { ...state, current: null };
-        }
-
-        case types.CREATE_CHAT: {
-            return {
-                ...state,
-                current: 0,
-                collection: [action.payload, ...state.collection]
-            };
-        }
-
-        case types.ADD_CHAT: {
-            return {
-                ...state,
-                collection: [action.payload, ...state.collection]
-            };
-        }
-
-        case types.DELETE_CHAT: {
-            const collection = [...state.collection];
-            const deleted = collection.splice(action.payload, 1)[0];
-
-            if (deleted._id === state.current?._id) {
-                return { current: null, collection };
-            }
-
-            return { ...state, collection };
-        }
-
-        case types.ADD_MESSAGE: {
-            return {
-                ...state,
-                collection: pushMessage(state, action.payload)
-            };
-        }
-
-        case types.MESSAGE_SEEN: {
-            return {
-                ...state,
-                collection: updateMessage(state.collection, action.payload)
-            };
-        }
-
-        default:
-            return state;
+      return {
+        ...state,
+        byId: chats,
+        allIds: Object.keys(chats)
+      };
     }
+
+    case types.SIGNOUT: {
+      return initialState;
+    }
+
+    case types.SET_CURRENT: {
+      return { ...state, current: action.payload };
+    }
+
+    case types.CLOSE_CURRENT: {
+      return { ...state, current: null };
+    }
+
+    case types.CREATE_CHAT: {
+      const _id = action.payload._id;
+
+      return {
+        ...state,
+        current: _id,
+        allIds: [_id, ...state.allIds],
+        byId: {
+          ...state.byId,
+          [_id]: action.payload
+        }
+      };
+    }
+
+    case types.ADD_CHAT: {
+      const _id = action.payload._id;
+
+      return {
+        ...state,
+        allIds: [_id, ...state.allIds],
+        byId: {
+          ...state.byId,
+          [_id]: action.payload
+        }
+      };
+    }
+
+    case types.DELETE_CHAT: {
+      const allIds = state.allIds.filter(id => id !== action.payload);
+      const { _, ...byId } = state.byId;
+
+      if (action.payload === state.current) {
+        return {
+          current: null,
+          allIds,
+          byId
+        };
+      }
+
+      return {
+        ...state,
+        allIds,
+        byId
+      };
+    }
+
+    case types.ADD_MESSAGE: {
+      const { message, chat: _id } = action.payload;
+      const chat = state.byId[_id];
+      const unread = message.from === chat.from ? chat.unread : chat.unread + 1;
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [_id]: {
+            ...chat,
+            messages: [...chat.messages, message._id],
+            unread
+          }
+        }
+      };
+    }
+
+    case types.READ_MESSAGE: {
+      const { message, chat: _id } = action.payload;
+      const chat = state.byId[_id];
+      const unread = message.from === chat.from ? chat.unread : chat.unread - 1;
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [_id]: {
+            ...chat,
+            unread
+          }
+        }
+      };
+    }
+
+    default:
+      return state;
+  }
 }

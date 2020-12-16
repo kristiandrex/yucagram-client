@@ -7,37 +7,37 @@ import ProfileCard from "components/Profile/ProfileCard";
 import { createChat } from "actions/chats";
 
 const Styled = styled.div`
-    height: 100%;
+  height: 100%;
 
-    .wrapper {
-        height: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+  .wrapper {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 `;
 
 export default function CurrentUser({ user }) {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const handleOnClick = () => {
-        dispatch(createChat(user));
-    };
+  const handleOnClick = () => {
+    dispatch(createChat(user));
+  };
 
-    return (
-        <Styled>
-            <ProfileCard user={user} />
-            <div className="wrapper">
-                <div className="card">
-                    <div className="card-body">
-                        <button className="btn btn-primary" onClick={handleOnClick}>Agregar chat</button>
-                    </div>
-                </div>
-            </div>
-        </Styled>
-    );
+  return (
+    <Styled>
+      <ProfileCard user={user} />
+      <div className="wrapper">
+        <div className="card">
+          <div className="card-body">
+            <button className="btn btn-primary" onClick={handleOnClick}>Agregar chat</button>
+          </div>
+        </div>
+      </div>
+    </Styled>
+  );
 }
 
 CurrentUser.propTypes = {
-    user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired
 };
