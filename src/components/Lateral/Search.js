@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import styled from "styled-components";
-import PropTypes from "prop-types";
-
 import useDebounce from "hooks/useDebounce";
 import { search, clearSearch } from "actions/search";
 
 const StyledSearch = styled.div`
   display: flex;
   align-items: center;
-
-  .i-close {
-    cursor: pointer;
-  }
 `;
 
-export default function Search({ setSearching, searching }) {
+export default function Search() {
+  const [isSearching, setIsSearching] = useState(false);
   const [value, setValue] = useState("");
   const debounce = useDebounce(value);
 
@@ -28,14 +23,13 @@ export default function Search({ setSearching, searching }) {
       return handleClear();
     }
 
+    setIsSearching(true);
     setValue(newValue);
-    setSearching(true);
   };
 
   const handleClear = () => {
-    setSearching(false);
     setValue("");
-
+    setIsSearching(false);
     dispatch(clearSearch());
   };
 
@@ -54,12 +48,7 @@ export default function Search({ setSearching, searching }) {
         onChange={handleSearch}
         value={value}
       />
-      {searching && <i className="text-primary ml-2 material-icons i-close" onClick={handleClear}>clear</i>}
+      {isSearching && <i className="text-primary ml-2 material-icons cursor" onClick={handleClear}>clear</i>}
     </StyledSearch>
   );
 }
-
-Search.propTypes = {
-  setSearching: PropTypes.func.isRequired,
-  searching: PropTypes.bool.isRequired
-};

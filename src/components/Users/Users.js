@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import User from "./User";
 
 export default function Users() {
-  const users = useSelector((state) => state.results.users);
+  const users = useSelector((state) => state.search.users);
 
   if (users.length === 0) {
     return null;

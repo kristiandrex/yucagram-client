@@ -13,7 +13,15 @@ const StyledEmpty = styled.div`
 `;
 
 export default function Chats() {
-  const chats = useSelector((state) => state.chats.allIds);
+  const chats = useSelector((state) => {
+    if (state.search.isSeaching) {
+      return state.search.chats;
+    }
+
+    return state.chats.allIds;
+  });
+
+  const isSearching = useSelector((state) => state.search.isSearching);
 
   if (chats.length === 0) {
     return (
@@ -24,12 +32,11 @@ export default function Chats() {
   }
 
   return (
-    <TransitionGroup>
-      {
-        chats.map((id) =>
-          <Chat key={id} id={id}/>
-        )
-      }
-    </TransitionGroup>
+    <div>
+      {isSearching && <div className="p-2 font-weight-bold text-center border-bottom">Chats</div>}
+      {chats.map((_id) => (
+        <Chat key={_id} _id={_id} />
+      ))}
+    </div>
   );
 }

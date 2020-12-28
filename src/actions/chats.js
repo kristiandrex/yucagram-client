@@ -10,7 +10,7 @@ export function loadChats() {
       const message = new schema.Entity("messages", {}, { idAttribute: "_id" });
       const chat = new schema.Entity("chats", { messages: [message] }, { idAttribute: "_id" });
       const normalized = normalize(response.data, [chat]);
-      
+
       dispatch({
         type: types.LOAD_CHATS,
         payload: normalized.entities
@@ -61,5 +61,11 @@ export function addChat(user) {
     catch (error) {
       console.log(error);
     }
+  };
+}
+
+export function closeCurrent() {
+  return {
+    type: types.CLOSE_CURRENT
   };
 }

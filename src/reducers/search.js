@@ -2,7 +2,8 @@ import types from "types";
 
 const initialState = {
   chats: [],
-  users: []
+  users: [],
+  isSearching: false
 };
 
 export default function reducer(state = initialState, action) {

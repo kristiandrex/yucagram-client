@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import MyProfile from "components/Profile/MyProfile";
 import Search from "components/Lateral/Search";
-import Users from "components/Users/Users";
 import Chats from "components/Chats/Chats";
+import Users from "components/Users/Users";
 import { loadChats } from "actions/chats";
 
 const LateralStyled = styled.div`
@@ -20,12 +20,8 @@ const LateralStyled = styled.div`
 `;
 
 export default function Lateral() {
-  const [searching, setSearching] = useState(false);
+  const isSearching = useSelector((state) => state.search.isSearching);
   const dispatch = useDispatch();
-
-  const handleSearching = (value) => {
-    setSearching(value);
-  };
 
   useEffect(() => {
     dispatch(loadChats());
@@ -34,8 +30,8 @@ export default function Lateral() {
   return (
     <LateralStyled className="col-lg-3 col-sm-4 col-12 border-right">
       <MyProfile />
-      <Search setSearching={handleSearching} searching={searching} />
-      <Users />
+      <Search />
+      {isSearching && <Users />}
       <Chats />
     </LateralStyled>
   );

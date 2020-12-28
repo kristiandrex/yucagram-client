@@ -18,6 +18,10 @@ const GlobalStyled = createGlobalStyle`
   .dropdown-menu {
     text-align: center !important;
   }
+
+  .cursor {
+    cursor: pointer;
+  }
 `;
 
 export default function App() {

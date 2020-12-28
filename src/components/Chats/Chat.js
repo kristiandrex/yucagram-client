@@ -23,11 +23,11 @@ const Styled = styled.div`
   }
 `;
 
-export default function Chat({ id }) {
-  const chat = useSelector((state) => state.chats.byId[id]);
+export default function Chat({ _id }) {
+  const chat = useSelector((state) => state.chats.byId[_id]);
 
   const dispatch = useDispatch();
-  const onClick = () => dispatch(setCurrent(id));
+  const onClick = () => dispatch(setCurrent(_id));
 
   return (
     <Styled className="border-bottom p-2" onClick={onClick}>
@@ -42,5 +42,5 @@ export default function Chat({ id }) {
 }
 
 Chat.propTypes = {
-  id: PropTypes.string.isRequired
+  _id: PropTypes.string.isRequired
 };
