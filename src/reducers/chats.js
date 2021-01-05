@@ -8,6 +8,10 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
+    case types.SIGNOUT: {
+      return initialState;
+    }
+
     case types.LOAD_CHATS: {
       const chats = action.payload.chats;
 
@@ -16,10 +20,6 @@ export default function reducer(state = initialState, action) {
         byId: chats,
         allIds: Object.keys(chats)
       };
-    }
-
-    case types.SIGNOUT: {
-      return initialState;
     }
 
     case types.SET_CURRENT: {
@@ -57,6 +57,7 @@ export default function reducer(state = initialState, action) {
       };
     }
 
+    //TODO: Fix delete
     case types.DELETE_CHAT: {
       const allIds = state.allIds.filter(id => id !== action.payload);
       const { _, ...byId } = state.byId;
@@ -79,7 +80,10 @@ export default function reducer(state = initialState, action) {
     case types.ADD_MESSAGE: {
       const { message, chat: _id } = action.payload;
       const chat = state.byId[_id];
-      const unread = message.from === chat.from ? chat.unread : chat.unread + 1;
+
+      const unread = message.from === chat.from
+        ? chat.unread
+        : chat.unread + 1;
 
       return {
         ...state,
@@ -87,7 +91,7 @@ export default function reducer(state = initialState, action) {
           ...state.byId,
           [_id]: {
             ...chat,
-            messages: [...chat.messages, message._id],
+            messages: [message._id, ...chat.messages],
             unread
           }
         }
@@ -97,7 +101,10 @@ export default function reducer(state = initialState, action) {
     case types.READ_MESSAGE: {
       const { message, chat: _id } = action.payload;
       const chat = state.byId[_id];
-      const unread = message.from === chat.from ? chat.unread : chat.unread - 1;
+
+      const unread = message.from === chat.from
+        ? chat.unread
+        : chat.unread - 1;
 
       return {
         ...state,
@@ -111,7 +118,25 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    default:
+    case types.LAZY_MESSAGES: {
+      const _id = action.payload.chat;
+      const messages = Object.keys(action.payload.messages);
+      const chat = state.byId[_id];
+
+      return {
+        ...state,
+        byId: {
+          ...state.byId,
+          [_id]: {
+            ...chat,
+            messages: chat.messages.concat(messages),
+          }
+        }
+      };
+    }
+
+    default: {
       return state;
+    }
   }
 }

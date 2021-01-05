@@ -4,8 +4,9 @@ import io from "socket.io-client";
 let instance;
 
 function get() {
-  if (!instance) {
-    const token = localStorage.getItem("token");
+  const token = localStorage.getItem("token");
+
+  if (!instance && token) {
     instance = io(SERVER_URL, { query: { token } });
   }
 
@@ -14,7 +15,8 @@ function get() {
 
 function disconnect() {
   instance.disconnect();
-  return instance = null;
+  instance = null;
+  return;
 }
 
 const socket = {

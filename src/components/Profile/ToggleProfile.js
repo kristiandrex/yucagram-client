@@ -54,7 +54,7 @@ export default function ToggleProfile({ show, onClose }) {
       <CSSTransition classNames="transition" unmountOnExit timeout={300} in={show} nodeRef={ref}>
         <div className="wrapper" ref={ref}>
           <div className="header p-2 bg-primary text-white">
-            <span className="material-icons" onClick={onClose}>keyboard_backspace</span>
+            <span className="material-icons" onClick={onClose}>arrow_back</span>
             <span className="font-weight-bold">Perfil</span>
           </div>
           <div className="p-4 d-flex justify-content-center">

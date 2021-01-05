@@ -1,10 +1,9 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
-
 import Lateral from "./Lateral/Lateral";
 import Current from "./Current/Current";
-import { SocketContext } from "components/Socket";
+import socket from "util/socket";
 import { messageIn, readMessage } from "actions/messages";
 
 const StyledHome = styled.div`
@@ -29,18 +28,21 @@ const StyledHome = styled.div`
 `;
 
 export default function Home() {
-  const socket = useContext(SocketContext);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    socket.on("SEND_MESSAGE", (payload) => {
+    const io = socket.get();
+
+    io.on("SEND_MESSAGE", (payload) => {
       dispatch(messageIn(payload));
     });
 
-    socket.on("READ_MESSAGE", (payload) => {
+    io.on("READ_MESSAGE", (payload) => {
       dispatch(readMessage(payload));
     });
-  }, [socket, dispatch]);
+
+    return () => socket.disconnect();
+  }, [dispatch]);
 
   return (
     <StyledHome className="row no-gutters">

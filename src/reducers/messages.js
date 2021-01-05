@@ -1,7 +1,6 @@
 import types from "types";
 
 const initialState = {
-  allIds: [],
   byId: {}
 };
 
@@ -15,8 +14,7 @@ export default function reducer(state = initialState, action) {
       const messages = action.payload.messages || {};
 
       return {
-        byId: messages,
-        allIds: Object.keys(messages)
+        byId: messages
       };
     }
 
@@ -25,8 +23,6 @@ export default function reducer(state = initialState, action) {
       const { _id } = message;
 
       return {
-        ...state,
-        allIds: [...state.allIds, _id],
         byId: {
           ...state.byId,
           [_id]: message
@@ -35,17 +31,26 @@ export default function reducer(state = initialState, action) {
     }
 
     case types.READ_MESSAGE: {
-      const { message } = action.payload;
-      const { _id } = message;
+      const _id = action.payload.message._id;
 
       return {
-        ...state,
         byId: {
           ...state.byId,
           [_id]: {
             ...state.byId[_id],
             seen: true
           }
+        }
+      };
+    }
+
+    case types.LAZY_MESSAGES: {
+      const messages = action.payload.messages;
+
+      return {
+        byId: {
+          ...state.byId,
+          ...messages
         }
       };
     }

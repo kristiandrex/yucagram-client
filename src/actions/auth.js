@@ -15,19 +15,18 @@ export function verifyAuth() {
 
 export function signup(payload) {
   localStorage.setItem("token", payload.token);
-  return setUser(payload);
+  return setUser(payload.user);
 }
 
 function signinToken() {
-  return async (dispatch) => {
+  return async function (dispatch) {
     try {
       const response = await request.get("/auth");
-      const token = localStorage.getItem("token");
-
-      dispatch(setUser({ user: response.data, token }));
+      dispatch(setUser(response.data));
     }
 
     catch (error) {
+      dispatch(signout());
       console.log(error);
     }
   };
@@ -35,11 +34,11 @@ function signinToken() {
 
 export function signin(payload) {
   localStorage.setItem("token", payload.token);
-  return setUser(payload);
+  return setUser(payload.user);
 }
 
-function setUser(payload) {
-  return { type: types.SET_USER, payload };
+function setUser(user) {
+  return { type: types.SET_USER, payload: user };
 }
 
 export function signout() {

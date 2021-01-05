@@ -28,16 +28,14 @@ const Styled = styled.div`
   }
 `;
 
-export default function LastMessage({ chat }) {
+export default function Preview({ chat }) {
   const selector = (state) => {
-    const index = chat.messages.length - 1;
-
-    if (index < 0) {
+    if (chat.messages.length === 0) {
       return null;
     }
 
-    const id = chat.messages[index];
-    return state.messages.byId[id];
+    const _id = chat.messages[0];
+    return state.messages.byId[_id];
   };
 
   const message = useSelector(selector);
@@ -64,6 +62,6 @@ export default function LastMessage({ chat }) {
   );
 }
 
-LastMessage.propTypes = {
+Preview.propTypes = {
   chat: PropTypes.object.isRequired
 };

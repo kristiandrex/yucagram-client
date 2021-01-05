@@ -10,7 +10,7 @@ export default function reducer(state = initialState, action) {
     case types.SET_USER: {
       return {
         loading: false,
-        ...action.payload
+        user: action.payload
       };
     }
 

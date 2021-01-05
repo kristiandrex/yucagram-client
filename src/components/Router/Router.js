@@ -10,12 +10,10 @@ import Home from "components/Home";
 import Loading from "components/UI/Loading";
 import Password from "components/Login/Password";
 import { verifyAuth } from "actions/auth";
-import Socket from "components/Socket";
 
 export default function Router() {
   const user = useSelector((state) => state.auth.user);
   const loading = useSelector((state) => state.auth.loading);
-
   const isAuth = user !== null;
 
   const dispatch = useDispatch();
@@ -32,9 +30,7 @@ export default function Router() {
     <BrowserRouter>
       <Switch>
         <Private isAuth={isAuth} exact path="/" >
-          <Socket>
-            <Home />
-          </Socket>
+          <Home />
         </Private>
         <Public isAuth={isAuth} exact path="/signin" >
           <Signin />

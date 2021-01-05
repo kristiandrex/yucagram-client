@@ -22,6 +22,10 @@ const GlobalStyled = createGlobalStyle`
   .cursor {
     cursor: pointer;
   }
+
+  .avatar img {
+    border-radius: 50%;
+  }
 `;
 
 export default function App() {

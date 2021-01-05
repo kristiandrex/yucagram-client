@@ -1,19 +1,14 @@
-import React from "react";
+import React, { createContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Messages from "components/Messages/Messages";
-import Write from "components/Messages/WriteMessage";
+import Write from "components/Current/Write";
 
 const Styled = styled.div`
   display: grid;
   grid-template-rows: 1fr auto;
   height: 100%;
   overflow: hidden;
-
-  .messages {
-    height: 100%;
-    overflow-y: auto;
-  }
 
   @media (min-width: 576px){
     .profile .material-icons {
@@ -22,12 +17,16 @@ const Styled = styled.div`
   }
 `;
 
+export const ChatCTX = createContext();
+
 export default function CurrentChat({ chat }) {
   return (
-    <Styled>
-      <Messages chat={chat._id} />
-      <Write />
-    </Styled>
+    <ChatCTX.Provider value={chat._id}>
+      <Styled>
+        <Messages />
+        <Write />
+      </Styled>
+    </ChatCTX.Provider>
   );
 }
 

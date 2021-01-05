@@ -55,7 +55,7 @@ export default function Crop({ src, onDiscard, onCrop }) {
       height: parseInt(crop.height * scale.y)
     };
 
-    return onCrop(region);
+    onCrop(region);
   };
 
   return createPortal(

@@ -1,44 +1,37 @@
+import { normalize, schema } from "normalizr";
 import types from "types";
 import { addChat } from "./chats";
 
-/**
- * 
- * @param {*} payload 
- */
 export function messageIn(payload) {
   return function (dispatch, getState) {
-    const chat = getState().chats.byId[payload.chat];
+    const { message, chat: _id } = payload;
+    const chat = getState().chats.byId[_id];
 
     if (!chat) {
-      return dispatch(addChat(payload.message.from));
+      return dispatch(addChat(message.from));
     }
 
-    return dispatch(addMessage(payload.message, chat._id));
+    return dispatch(addMessage(message, _id));
   };
 }
 
-/**
- * 
- * @param {*} message 
- * @param {*} chat  _id
- */
 export function addMessage(message, chat) {
+  return { type: types.ADD_MESSAGE, payload: { message, chat } };
+}
+
+export function readMessage(payload) {
+  return { type: types.READ_MESSAGE, payload };
+}
+
+export function lazyMessages(messages, chat) {
+  const message = new schema.Entity("messages", {}, { idAttribute: "_id" });
+  const { entities } = normalize(messages, [message]);
+  const normalizedMessages = entities.messages || {};
+
   return {
-    type: types.ADD_MESSAGE,
-    payload: {
-      message,
+    type: types.LAZY_MESSAGES, payload: {
+      messages: normalizedMessages,
       chat
     }
-  };
-}
-
-/**
- * 
- * @param {*} payload 
- */
-export function readMessage(payload) {
-  return {
-    type: types.READ_MESSAGE,
-    payload
   };
 }

@@ -1,9 +1,10 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { TransitionGroup } from "react-transition-group";
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-
-import Chat from "./Chat";
+import Chat from "components/Chats/Chat";
+import Loading from "components/UI/Loading";
+import { loadChats } from "actions/chats";
+import request from "util/request";
 
 const StyledEmpty = styled.div`
   display: flex;
@@ -13,15 +14,23 @@ const StyledEmpty = styled.div`
 `;
 
 export default function Chats() {
-  const chats = useSelector((state) => {
-    if (state.search.isSeaching) {
-      return state.search.chats;
-    }
+  const chats = useSelector((state) => state.chats.allIds);
+  const [isLoading, setIsLoading] = useState(true);
+  const dispatch = useDispatch();
 
-    return state.chats.allIds;
-  });
+  useEffect(() => {
+    request.get("/auth/chats")
+      .then((response) => {
+        dispatch(loadChats(response.data));
+        setIsLoading(false);
+      })
+      .catch((error) => console.error(error));
 
-  const isSearching = useSelector((state) => state.search.isSearching);
+  }, [dispatch]);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   if (chats.length === 0) {
     return (
@@ -33,10 +42,11 @@ export default function Chats() {
 
   return (
     <div>
-      {isSearching && <div className="p-2 font-weight-bold text-center border-bottom">Chats</div>}
-      {chats.map((_id) => (
-        <Chat key={_id} _id={_id} />
-      ))}
+      {
+        chats.map((_id) =>
+          <Chat key={_id} _id={_id} />
+        )
+      }
     </div>
   );
 }

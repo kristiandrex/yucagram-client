@@ -40,7 +40,7 @@ export default function AvatarChooser() {
 
   const handleChange = () => {
     const file = ref.current.files[0];
-        
+
     setShow(true);
     setSrc(URL.createObjectURL(file));
   };
@@ -56,12 +56,8 @@ export default function AvatarChooser() {
     formData.append("avatar", ref.current.files[0]);
     formData.append("region", JSON.stringify(region));
 
-    changeAvatar(formData)
-      .then(action => {
-        setShow(false);
-        dispatch(action);
-      })
-      .catch(error => console.log(error));
+    dispatch(changeAvatar(formData));
+    setShow(false);
   };
 
   return (

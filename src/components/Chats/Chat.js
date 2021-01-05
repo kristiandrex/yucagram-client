@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
-import LastMessage from "./LastMessage";
+import Preview from "./Preview";
 import Avatar from "components/Avatar";
 import { setCurrent } from "actions/chats";
 
@@ -34,7 +34,7 @@ export default function Chat({ _id }) {
       <Avatar user={chat.to} />
       <div className="preview">
         <span className="username">{chat.to.username}</span>
-        <LastMessage chat={chat} />
+        <Preview chat={chat} />
       </div>
       <span className="badge badge-primary" hidden={chat.unread === 0}>{chat.unread}</span>
     </Styled>
