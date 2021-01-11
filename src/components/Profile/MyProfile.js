@@ -10,18 +10,17 @@ export default function MyProfile() {
   const user = useSelector((state) => state.auth.user);
 
   const dispatch = useDispatch();
-
   const handleSignout = () => dispatch(signout());
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   return (
-    <div>
+    <div className="my-profile">
       <ToggleProfile show={show} onClose={handleClose} />
       <ProfileCard user={user} >
         <Dropdown>
           <Dropdown.Toggle>
-            <i className="material-icons text-white">more_vert</i>
+            <span className="material-icons text-white">more_vert</span>
           </Dropdown.Toggle>
           <Dropdown.Menu className="text-center">
             <Dropdown.Item onClick={handleSignout}>Cerrar sesión</Dropdown.Item>

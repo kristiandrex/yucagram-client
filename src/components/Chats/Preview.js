@@ -29,16 +29,16 @@ const Styled = styled.div`
 `;
 
 export default function Preview({ chat }) {
-  const selector = (state) => {
-    if (chat.messages.length === 0) {
+  const message = useSelector((state) => {
+    const len = chat.messages.length;
+
+    if (len === 0) {
       return null;
     }
 
-    const _id = chat.messages[0];
+    const _id = chat.messages[len - 1];
     return state.messages.byId[_id];
-  };
-
-  const message = useSelector(selector);
+  });
 
   if (!message) {
     return null;

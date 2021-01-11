@@ -12,34 +12,37 @@ export function search(value) {
       const chat = allChats[key];
 
       if (chat.to.username.includes(value)) {
-        filterChats.push(chat);
+        filterChats.push(chat._id);
         filterUsers.push(chat.to.username);
       }
     }
 
     try {
       const response = await request.post("/auth/search", { value, ignore: filterUsers });
-      dispatch(setSearch(filterChats, response.data));
+      dispatch(setResults(filterChats, response.data));
     }
 
     catch (error) {
-      console.log(error);
-      dispatch(clearSearch());
+      console.error(error);
+      dispatch(clearResults());
     }
   };
 }
 
-function setSearch(chats, users) {
+function setResults(chats, users) {
   return {
-    type: types.SEARCH,
+    type: types.SET_RESULTS,
     payload: {
       chats,
       users,
-      isSearching: true
     }
   };
 }
 
-export function clearSearch() {
-  return { type: types.CLEAR_SEARCH };
+export function clearResults() {
+  return { type: types.CLEAR_RESULTS };
+}
+
+export function setSearching() {
+  return { type: types.SET_SEARCHING };
 }

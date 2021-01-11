@@ -6,10 +6,7 @@ import { setCurrent } from "actions/chats";
 
 function User({ user }) {
   const dispatch = useDispatch();
-
-  const handleClick = () => {
-    dispatch(setCurrent(user));
-  };
+  const handleClick = () => dispatch(setCurrent(user));
 
   return (
     <div

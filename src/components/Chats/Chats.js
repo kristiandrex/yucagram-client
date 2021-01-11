@@ -6,11 +6,15 @@ import Loading from "components/UI/Loading";
 import { loadChats } from "actions/chats";
 import request from "util/request";
 
-const StyledEmpty = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+const StyledChats = styled.div`
   height: 100%;
+
+  .empty-chats {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+  }
 `;
 
 export default function Chats() {
@@ -32,21 +36,19 @@ export default function Chats() {
     return <Loading />;
   }
 
-  if (chats.length === 0) {
-    return (
-      <StyledEmpty>
-        <span>No hay chats</span>
-      </StyledEmpty>
-    );
-  }
+  const ListChats = chats.map((_id) => <Chat key={_id} _id={_id} />);
 
   return (
-    <div>
+    <StyledChats>
       {
-        chats.map((_id) =>
-          <Chat key={_id} _id={_id} />
-        )
+        chats.length === 0
+          ? (
+            <div className="empty-chats">
+              <span>No hay chats</span>
+            </div>
+          )
+          : ListChats
       }
-    </div>
+    </StyledChats>
   );
 }

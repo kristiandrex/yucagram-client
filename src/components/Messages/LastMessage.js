@@ -3,12 +3,12 @@ import { useInView } from "react-intersection-observer";
 import PropTypes from "prop-types";
 import MessageProvider from "components/Messages/MessageProvider";
 
-export default function LastMessage({ _id }) {
+export default function LastMessage({ _id, onObserve }) {
   const [ref, inView] = useInView({ threshold: 0 });
 
   useEffect(() => {
-
-  }, [inView]);
+    onObserve(inView);
+  }, [inView, onObserve]);
 
   return (
     <div className="last-message-observer" ref={ref}>
@@ -18,5 +18,6 @@ export default function LastMessage({ _id }) {
 }
 
 LastMessage.propTypes = {
-  _id: PropTypes.string
+  _id: PropTypes.string,
+  onObserve: PropTypes.func
 };

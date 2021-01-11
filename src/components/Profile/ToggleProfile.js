@@ -51,7 +51,13 @@ export default function ToggleProfile({ show, onClose }) {
 
   return (
     <StyledProfile>
-      <CSSTransition classNames="transition" unmountOnExit timeout={300} in={show} nodeRef={ref}>
+      <CSSTransition
+        classNames="transition"
+        unmountOnExit
+        timeout={300}
+        in={show}
+        nodeRef={ref}
+      >
         <div className="wrapper" ref={ref}>
           <div className="header p-2 bg-primary text-white">
             <span className="material-icons" onClick={onClose}>arrow_back</span>

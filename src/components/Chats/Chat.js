@@ -2,7 +2,6 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-
 import Preview from "./Preview";
 import Avatar from "components/Avatar";
 import { setCurrent } from "actions/chats";
@@ -25,7 +24,6 @@ const Styled = styled.div`
 
 export default function Chat({ _id }) {
   const chat = useSelector((state) => state.chats.byId[_id]);
-
   const dispatch = useDispatch();
   const onClick = () => dispatch(setCurrent(_id));
 

@@ -10,11 +10,11 @@ export default function reducer(state = initialState, action) {
       return initialState;
     }
 
-    case types.LOAD_CHATS: {
-      const messages = action.payload.messages || {};
+    case types.LOAD_CHATS: {      
+      const byId = action.payload.messages || {};
 
       return {
-        byId: messages
+        byId
       };
     }
 

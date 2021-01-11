@@ -3,10 +3,12 @@ import request from "util/request";
 import types from "types";
 
 export function loadChats(chats) {
-  const message = new schema.Entity("messages", {}, { idAttribute: "_id" });
-  const chat = new schema.Entity("chats", { messages: [message] }, { idAttribute: "_id" });
-  const { entities } = normalize(chats, [chat]);
-  
+  const idAttribute = "_id";
+
+  const messageSchema = new schema.Entity("messages", {}, { idAttribute });
+  const chatSchema = new schema.Entity("chats", { messages: [messageSchema] }, { idAttribute });
+  const { entities } = normalize(chats, [chatSchema]);
+
   return { type: types.LOAD_CHATS, payload: entities };
 }
 

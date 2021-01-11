@@ -2,7 +2,6 @@ import * as React from "react";
 import styled from "styled-components";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
-
 import { createChat } from "actions/chats";
 
 const Styled = styled.div`
@@ -18,14 +17,14 @@ const Styled = styled.div`
 
 export default function CurrentUser({ user }) {
   const dispatch = useDispatch();
-  const handleAddChat = () => dispatch(createChat(user));
+  const handleAdd = () => dispatch(createChat(user));
 
   return (
     <Styled>
       <div className="wrapper">
         <div className="card">
           <div className="card-body">
-            <button className="btn btn-primary" onClick={handleAddChat}>Agregar chat</button>
+            <button className="btn btn-primary" onClick={handleAdd}>Agregar chat</button>
           </div>
         </div>
       </div>

@@ -13,12 +13,13 @@ export default function reducer(state = initialState, action) {
     }
 
     case types.LOAD_CHATS: {
-      const chats = action.payload.chats;
+      const byId = action.payload.chats || {};
+      const allIds = Object.keys(byId);
 
       return {
         ...state,
-        byId: chats,
-        allIds: Object.keys(chats)
+        byId,
+        allIds
       };
     }
 
@@ -91,7 +92,7 @@ export default function reducer(state = initialState, action) {
           ...state.byId,
           [_id]: {
             ...chat,
-            messages: [message._id, ...chat.messages],
+            messages: chat.messages.concat(message._id),
             unread
           }
         }

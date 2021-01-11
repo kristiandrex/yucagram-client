@@ -1,19 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import useDebounce from "hooks/useDebounce";
-import { search, clearSearch } from "actions/search";
+import { search, clearResults, setSearching } from "actions/search";
 
 const StyledSearch = styled.div`
+  align-items: center;  
   display: flex;
-  align-items: center;
 `;
 
 export default function Search() {
-  const [isSearching, setIsSearching] = useState(false);
+  const searching = useSelector((state) => state.search.searching);
   const [value, setValue] = useState("");
   const debounce = useDebounce(value);
-
   const dispatch = useDispatch();
 
   const handleSearch = (event) => {
@@ -23,14 +22,13 @@ export default function Search() {
       return handleClear();
     }
 
-    setIsSearching(true);
+    dispatch(setSearching());
     setValue(newValue);
   };
 
   const handleClear = () => {
     setValue("");
-    setIsSearching(false);
-    dispatch(clearSearch());
+    dispatch(clearResults());
   };
 
   useEffect(() => {
@@ -40,7 +38,7 @@ export default function Search() {
   }, [debounce, dispatch]);
 
   return (
-    <StyledSearch className="p-2 border-bottom">
+    <StyledSearch className="border-bottom p-2">
       <input
         type="text"
         className="form-control"
@@ -48,7 +46,14 @@ export default function Search() {
         onChange={handleSearch}
         value={value}
       />
-      {isSearching && <i className="text-primary ml-2 material-icons cursor" onClick={handleClear}>clear</i>}
+      {searching && (
+        <span
+          className="text-primary ml-2 material-icons cursor"
+          onClick={handleClear}
+        >
+          clear
+        </span>
+      )}
     </StyledSearch>
   );
 }
