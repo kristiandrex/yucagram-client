@@ -11,8 +11,7 @@ const StyledResults = styled.div`
     background-color: #fff;
     height: 100%;
     position: absolute;
-    width: 100%;
-    z-index: 1;
+    width: 100%;    
   }
 
   .results-enter {
