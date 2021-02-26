@@ -19,7 +19,7 @@ export default function Signin() {
     }
 
     catch (error) {
-      console.log(error);
+      console.error(error);
     }
   };
 
@@ -67,14 +67,14 @@ function Form({ handleSubmit, handleChange, values, errors }) {
         {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
       </div>
       <button className="btn btn-primary btn-block" type="submit">
-                Iniciar sesión
+        Iniciar sesión
       </button>
       <div className="btn-group btn-block mt-3">
         <Link className="btn btn-link btn-sm" to="/password">
-                    ¿Olvidaste la contraseña?
+          ¿Olvidaste la contraseña?
         </Link>
         <Link className="btn btn-link btn-sm" to="/signup">
-                    Regístrate
+          Regístrate
         </Link>
       </div>
     </form>

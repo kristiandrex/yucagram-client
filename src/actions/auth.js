@@ -27,7 +27,7 @@ function signinToken() {
 
     catch (error) {
       dispatch(signout());
-      console.log(error);
+      console.error(error);
     }
   };
 }

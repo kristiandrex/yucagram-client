@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import ReactImageCrop from "react-image-crop";
 import styled from "styled-components";
-import PropTypes from "prop-types";
 import { scaleImage } from "util/image";
+import PropTypes from "prop-types";
+
 import "react-image-crop/dist/ReactCrop.css";
 
 const StyledCrop = styled.div`
+  border: 1px solid red;
   display: grid;
   grid-template-rows: 1fr auto;
   height: 100vh;

@@ -1,4 +1,4 @@
-# CHAT-MERN-TS-CLIENT
+# yucagram-client
 
 Chat client created with Typescript and MERN Stack.
 
@@ -8,4 +8,4 @@ Chat client created with Typescript and MERN Stack.
 * Material Icons - https://material.io/resources/icons/
 * Hero Patterns - http://www.heropatterns.com/
 
-Server repository: https://github.com/kristiandrex/chat-mern-ts-server
+Server repository: https://github.com/kristiandrex/yucagram-server

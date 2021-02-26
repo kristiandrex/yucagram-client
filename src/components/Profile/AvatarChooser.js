@@ -33,7 +33,7 @@ const StyledAvatarChooser = styled.div`
 export default function AvatarChooser() {
   const { avatar, username } = useSelector((state) => state.auth.user);
   const [show, setShow] = useState(false);
-  const [src, setSrc] = useState();
+  const [src, setSrc] = useState("");
 
   const dispatch = useDispatch();
   const ref = useRef(null);

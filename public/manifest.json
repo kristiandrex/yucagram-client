@@ -1,6 +1,6 @@
 {
-  "short_name": "Chat",
-  "name": "Chat with MERN Stack",
+  "short_name": "Yucagram",
+  "name": "Yucagram - chat with MERN Stack",
   "icons": [
     {
       "src": "favicon.ico",
