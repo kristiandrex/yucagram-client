@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
 import styled from "styled-components";
 import { CSSTransition } from "react-transition-group";
-import AvatarChooser from "./AvatarChooser";
+import AvatarViewer from "./AvatarViewer";
 import PropTypes from "prop-types";
 
 const StyledProfile = styled.div`
@@ -64,7 +64,7 @@ export default function ToggleProfile({ show, onClose }) {
             <span className="font-weight-bold">Perfil</span>
           </div>
           <div className="p-4 d-flex justify-content-center">
-            <AvatarChooser />
+            <AvatarViewer />
           </div>
         </div>
       </CSSTransition>

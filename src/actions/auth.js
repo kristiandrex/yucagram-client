@@ -46,19 +46,6 @@ export function signout() {
   return { type: types.SIGNOUT };
 }
 
-export function changeAvatar(data) {
-  return async function (dispatch) {
-    try {
-      const response = await request.post("/auth/upload/avatar", data);
-
-      dispatch({
-        type: types.SET_AVATAR,
-        payload: response.data
-      });
-    }
-
-    catch (error) {
-      console.error(error);
-    }
-  };
+export function changeAvatar(payload) {
+  return { type: types.SET_AVATAR, payload };
 }

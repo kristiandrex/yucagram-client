@@ -11,6 +11,10 @@ const GlobalStyled = createGlobalStyle`
     height: 100%;
   }
 
+  #root {
+    position: relative;
+  }
+
   .material-icons {
     vertical-align: middle !important;
   }

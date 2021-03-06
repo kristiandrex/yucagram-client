@@ -43,6 +43,7 @@ export default function Search() {
         type="text"
         className="form-control"
         placeholder="Buscar"
+        aria-label="Buscar"
         onChange={handleSearch}
         value={value}
       />
