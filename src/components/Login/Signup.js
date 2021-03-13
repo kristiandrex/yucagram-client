@@ -1,8 +1,9 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Formik } from "formik";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { Helmet } from "react-helmet-async";
 
 import Layout from "./Layout";
 import validate from "util/validateSignup";
@@ -28,7 +29,11 @@ export default function Signup() {
 
   return (
     <Layout>
-      <Formik onSubmit={onSubmit} validate={validate} initialValues={initialValues}>
+      <Formik
+        onSubmit={onSubmit}
+        validate={validate}
+        initialValues={initialValues}
+      >
         {Form}
       </Formik>
     </Layout>
@@ -38,7 +43,10 @@ export default function Signup() {
 
 function Form({ handleSubmit, handleChange, values, errors }) {
   return (
-    <Fragment>
+    <>
+      <Helmet>
+        <title>Registrarse - Yucagram</title>
+      </Helmet>
       <form noValidate onSubmit={handleSubmit}>
         <div className="form-group">
           <input
@@ -48,6 +56,7 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             className={errors.username ? "form-control is-invalid" : "form-control"}
             onChange={handleChange}
             value={values.username}
+            aria-label="Nombre de usuario"
           />
           {errors.username && <div className="invalid-feedback d-block">{errors.username}</div>}
         </div>
@@ -59,6 +68,7 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             className={errors.email ? "form-control is-invalid" : "form-control"}
             onChange={handleChange}
             value={values.email}
+            aria-label="Correo electrónico"
           />
           {errors.email && <div className="invalid-feedback d-block">{errors.email}</div>}
         </div>
@@ -70,17 +80,18 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             className={errors.password ? "form-control is-invalid" : "form-control"}
             onChange={handleChange}
             value={values.password}
+            aria-label="Contraseña"
           />
           {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
         </div>
         <button className="btn btn-primary btn-block" type="submit">
-                    Regístrate
+          Regístrate
         </button>
       </form>
       <Link className="btn btn-link btn-sm btn-block mt-3" to="/signin">
-                Inicia sesión
+        Inicia sesión
       </Link>
-    </Fragment>
+    </>
   );
 }
 

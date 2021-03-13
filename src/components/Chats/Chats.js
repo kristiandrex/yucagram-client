@@ -29,17 +29,18 @@ export default function Chats() {
         setIsLoading(false);
       })
       .catch((error) => console.error(error));
-
   }, [dispatch]);
 
   if (isLoading) {
     return <Loading />;
   }
 
-  const ListChats = chats.map((_id) => <Chat key={_id} _id={_id} />);
+  const ListChats = chats.map((_id, index) => (
+    <Chat key={_id} _id={_id} index={index} />
+  ));
 
   return (
-    <StyledChats>
+    <StyledChats role="list">
       {
         chats.length === 0
           ? (

@@ -10,7 +10,7 @@ import { readMessage } from "actions/messages";
 export default function MessageUnseen() {
   const { ref, inView } = useInView({ threshold: 1 });
   const { message } = useContext(MessageCTX);
-  const chat = useContext(ChatCTX);
+  const chatId = useContext(ChatCTX);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,10 +18,10 @@ export default function MessageUnseen() {
       const io = socket.get();
 
       io.emit("READ_MESSAGE", message._id, () => {
-        dispatch(readMessage({ message, chat }));
+        dispatch(readMessage({ message, chatId }));
       });
     }
-  }, [inView, message, chat, dispatch]);
+  }, [inView, message, chatId, dispatch]);
 
   return <Message ref={ref} />;
 }

@@ -62,7 +62,15 @@ export default function Current() {
   return (
     <Styled className="col-12 col-lg-9 col-sm-8" active>
       <div className="bg-primary p-2 profile">
-        <span className="material-icons cursor" onClick={handleClose}>arrow_back</span>
+        <span
+          className="material-icons cursor"
+          onClick={handleClose}
+          role="button"
+          tabIndex="0"
+          aria-label="Salir del chat"
+        >
+          arrow_back
+        </span>
         <Avatar user={user} />
         <span className="username">{user.username}</span>
       </div>

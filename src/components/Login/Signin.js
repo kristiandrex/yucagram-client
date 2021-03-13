@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { Formik } from "formik";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
+import { Helmet } from "react-helmet-async";
 
 import Layout from "components/Login/Layout";
 import { signin } from "actions/auth";
@@ -43,41 +44,48 @@ export default function Signin() {
 
 function Form({ handleSubmit, handleChange, values, errors }) {
   return (
-    <form noValidate onSubmit={handleSubmit}>
-      <div className="form-group">
-        <input
-          type="text"
-          name="username"
-          placeholder="Nombre de usuario"
-          className={errors.username ? "form-control is-invalid" : "form-control"}
-          onChange={handleChange}
-          value={values.username}
-        />
-        {errors.username && <div className="invalid-feedback d-block">{errors.username}</div>}
-      </div>
-      <div className="form-group">
-        <input
-          type="password"
-          name="password"
-          placeholder="Contraseña"
-          className={errors.password ? "form-control is-invalid" : "form-control"}
-          onChange={handleChange}
-          value={values.password}
-        />
-        {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
-      </div>
-      <button className="btn btn-primary btn-block" type="submit">
-        Iniciar sesión
-      </button>
-      <div className="btn-group btn-block mt-3">
-        <Link className="btn btn-link btn-sm" to="/password">
-          ¿Olvidaste la contraseña?
-        </Link>
-        <Link className="btn btn-link btn-sm" to="/signup">
-          Regístrate
-        </Link>
-      </div>
-    </form>
+    <>
+      <Helmet>
+        <title>Iniciar sesión - Yucagram</title>
+      </Helmet>
+      <form noValidate onSubmit={handleSubmit}>
+        <div className="form-group">
+          <input
+            type="text"
+            name="username"
+            placeholder="Nombre de usuario"
+            className={errors.username ? "form-control is-invalid" : "form-control"}
+            onChange={handleChange}
+            value={values.username}
+            aria-label="Nombre de usuario"
+          />
+          {errors.username && <div className="invalid-feedback d-block">{errors.username}</div>}
+        </div>
+        <div className="form-group">
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            className={errors.password ? "form-control is-invalid" : "form-control"}
+            onChange={handleChange}
+            value={values.password}
+            aria-label="Contraseña"
+          />
+          {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
+        </div>
+        <button className="btn btn-primary btn-block" type="submit">
+          Iniciar sesión
+        </button>
+        <div className="btn-group btn-block mt-3">
+          <Link className="btn btn-link btn-sm" to="/password">
+            ¿Olvidaste la contraseña?
+          </Link>
+          <Link className="btn btn-link btn-sm" to="/signup">
+            Regístrate
+          </Link>
+        </div>
+      </form>
+    </>
   );
 }
 

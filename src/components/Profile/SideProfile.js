@@ -30,13 +30,9 @@ const StyledProfile = styled.div`
     width: 100%;
     z-index: 1;
 
-    .header {
-      height: 65px;
-
-      span {
-        line-height: 47px;
-        vertical-align: middle;
-      }
+    .header span {
+      line-height: 47px;
+      vertical-align: middle;
     }
 
     .material-icons {
@@ -46,7 +42,7 @@ const StyledProfile = styled.div`
   }
 `;
 
-export default function ToggleProfile({ show, onClose }) {
+export default function SideProfile({ show, onClose }) {
   const ref = useRef(null);
 
   return (
@@ -60,7 +56,14 @@ export default function ToggleProfile({ show, onClose }) {
       >
         <div className="wrapper" ref={ref}>
           <div className="header p-2 bg-primary text-white">
-            <span className="material-icons" onClick={onClose}>arrow_back</span>
+            <span
+              className="material-icons"
+              onClick={onClose}
+              role="button"
+              tabIndex="0"
+            >
+              arrow_back
+            </span>
             <span className="font-weight-bold">Perfil</span>
           </div>
           <div className="p-4 d-flex justify-content-center">
@@ -72,7 +75,7 @@ export default function ToggleProfile({ show, onClose }) {
   );
 }
 
-ToggleProfile.propTypes = {
+SideProfile.propTypes = {
   show: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };

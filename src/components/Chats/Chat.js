@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -22,23 +22,34 @@ const Styled = styled.div`
   }
 `;
 
-export default function Chat({ _id }) {
+function Chat({ _id, index }) {
   const chat = useSelector((state) => state.chats.byId[_id]);
   const dispatch = useDispatch();
   const onClick = () => dispatch(setCurrent(_id));
 
   return (
-    <Styled className="border-bottom p-2" onClick={onClick}>
+    <Styled className="border-bottom p-2" onClick={onClick} role="listitem">
       <Avatar user={chat.to} />
       <div className="preview">
         <span className="username">{chat.to.username}</span>
         <Preview chat={chat} />
       </div>
-      <span className="badge badge-primary" hidden={chat.unread === 0}>{chat.unread}</span>
+      {
+        chat.unread !== 0 && (
+          <span className="badge badge-primary">{chat.unread}</span>
+        )
+      }
     </Styled>
   );
 }
 
 Chat.propTypes = {
-  _id: PropTypes.string.isRequired
+  _id: PropTypes.string.isRequired,
+  index: PropTypes.number
 };
+
+function areEquals(prev, next) {
+  return prev._id === next._id && prev.index === next.index;
+}
+
+export default memo(Chat, areEquals);

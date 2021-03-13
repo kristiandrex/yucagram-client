@@ -96,7 +96,7 @@ export default function AvatarViewer() {
   return (
     <StyledAvatarChooser className="mb-4">
       <Modal show={error.show} >
-        <div className="bg-light p-3 shadow-sm rounded">
+        <div className="bg-light p-3 shadow-sm rounded" role="alert">
           <p>{error.message}</p>
           <button
             className="btn btn-primary"
@@ -130,7 +130,13 @@ export default function AvatarViewer() {
           onChange={handleChange}
           ref={fileRef}
         />
-        <label htmlFor="avatar" className="material-icons bg-primary p-2">
+        <label
+          htmlFor="avatar"
+          className="material-icons bg-primary p-2"
+          tabIndex="0"
+          role="button"
+          aria-label="Escoger imagen de perfil"
+        >
           edit
         </label>
       </div>

@@ -1,7 +1,8 @@
 import types from "types";
 
 const initialState = {
-  byId: {}
+  byId: {},
+  totalUnread: 0
 };
 
 export default function reducer(state = initialState, action) {
@@ -10,19 +11,26 @@ export default function reducer(state = initialState, action) {
       return initialState;
     }
 
-    case types.LOAD_CHATS: {      
-      const byId = action.payload.messages || {};
+    case types.LOAD_CHATS: {
+      const { messages, totalUnread } = action.payload;
+      const byId = messages || {};
 
       return {
-        byId
+        byId,
+        totalUnread
       };
     }
 
     case types.ADD_MESSAGE: {
-      const { message } = action.payload;
+      const { message, chat } = action.payload;
       const { _id } = message;
 
+      const totalUnread = message.from === chat.from
+        ? state.totalUnread
+        : state.totalUnread + 1;
+
       return {
+        totalUnread,
         byId: {
           ...state.byId,
           [_id]: message
@@ -31,26 +39,21 @@ export default function reducer(state = initialState, action) {
     }
 
     case types.READ_MESSAGE: {
-      const _id = action.payload.message._id;
+      const { message, chat } = action.payload;
+      const { _id } = message;
+
+      const totalUnread = message.from === chat.from
+        ? state.totalUnread
+        : state.totalUnread - 1;
 
       return {
+        totalUnread,
         byId: {
           ...state.byId,
           [_id]: {
             ...state.byId[_id],
             seen: true
           }
-        }
-      };
-    }
-
-    case types.LAZY_MESSAGES: {
-      const messages = action.payload.messages;
-
-      return {
-        byId: {
-          ...state.byId,
-          ...messages
         }
       };
     }

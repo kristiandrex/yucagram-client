@@ -14,6 +14,7 @@ function User({ user }) {
       className="border-bottom p-2 d-flex align-items-center"
       style={{ cursor: "pointer" }}
       onClick={handleClick}
+      tabIndex="0"
     >
       <Avatar user={user} />
       <span className="ml-2 font-weight-bold">{user.username}</span>

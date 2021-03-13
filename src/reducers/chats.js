@@ -58,36 +58,21 @@ export default function reducer(state = initialState, action) {
       };
     }
 
-    //TODO: Fix delete
-    case types.DELETE_CHAT: {
-      const allIds = state.allIds.filter(id => id !== action.payload);
-      const { _, ...byId } = state.byId;
-
-      if (action.payload === state.current) {
-        return {
-          current: null,
-          allIds,
-          byId
-        };
-      }
-
-      return {
-        ...state,
-        allIds,
-        byId
-      };
-    }
-
     case types.ADD_MESSAGE: {
-      const { message, chat: _id } = action.payload;
-      const chat = state.byId[_id];
+      const { message, chat } = action.payload;
+      const { _id } = chat;
 
+      //The message is outgoing or incoming
       const unread = message.from === chat.from
         ? chat.unread
         : chat.unread + 1;
 
+      const newAllIds = state.allIds.filter((id) => id !== _id);
+      newAllIds.unshift(_id);
+
       return {
         ...state,
+        allIds: newAllIds,
         byId: {
           ...state.byId,
           [_id]: {
@@ -100,8 +85,7 @@ export default function reducer(state = initialState, action) {
     }
 
     case types.READ_MESSAGE: {
-      const { message, chat: _id } = action.payload;
-      const chat = state.byId[_id];
+      const { message, chat } = action.payload;
 
       const unread = message.from === chat.from
         ? chat.unread
@@ -111,26 +95,9 @@ export default function reducer(state = initialState, action) {
         ...state,
         byId: {
           ...state.byId,
-          [_id]: {
+          [chat._id]: {
             ...chat,
             unread
-          }
-        }
-      };
-    }
-
-    case types.LAZY_MESSAGES: {
-      const _id = action.payload.chat;
-      const messages = Object.keys(action.payload.messages);
-      const chat = state.byId[_id];
-
-      return {
-        ...state,
-        byId: {
-          ...state.byId,
-          [_id]: {
-            ...chat,
-            messages: chat.messages.concat(messages),
           }
         }
       };

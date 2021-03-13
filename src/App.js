@@ -1,6 +1,7 @@
 import React from "react";
 import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
+import { HelmetProvider } from "react-helmet-async";
 import Router from "components/Router/Router";
 import store from "store";
 
@@ -34,9 +35,11 @@ const GlobalStyled = createGlobalStyle`
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <GlobalStyled />
-      <Router />
-    </Provider>
+    <HelmetProvider>
+      <Provider store={store}>
+        <GlobalStyled />
+        <Router />
+      </Provider>
+    </HelmetProvider>
   );
 }

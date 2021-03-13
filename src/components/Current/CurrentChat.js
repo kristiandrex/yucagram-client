@@ -2,7 +2,7 @@ import React, { createContext } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Messages from "components/Messages/Messages";
-import Write from "components/Current/Write";
+import WriteBox from "components/Current/WriteBox";
 
 const Styled = styled.div`
   display: grid;
@@ -24,7 +24,7 @@ export default function CurrentChat({ chat }) {
     <ChatCTX.Provider value={chat._id}>
       <Styled>
         <Messages />
-        <Write />
+        <WriteBox />
       </Styled>
     </ChatCTX.Provider>
   );

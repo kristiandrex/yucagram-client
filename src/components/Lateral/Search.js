@@ -38,7 +38,7 @@ export default function Search() {
   }, [debounce, dispatch]);
 
   return (
-    <StyledSearch className="border-bottom p-2">
+    <StyledSearch className="border-bottom p-2" role="search">
       <input
         type="text"
         className="form-control"
@@ -51,6 +51,9 @@ export default function Search() {
         <span
           className="text-primary ml-2 material-icons cursor"
           onClick={handleClear}
+          tabIndex="0"
+          role="button"
+          aria-label="Cerrar la búsqueda"
         >
           clear
         </span>
