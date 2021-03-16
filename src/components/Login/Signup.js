@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
-import { Link } from "react-router-dom";
+import { Link } from "wouter";
 import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { Helmet } from "react-helmet-async";

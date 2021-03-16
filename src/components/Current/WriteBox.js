@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { addMessage } from "actions/messages";
-import socket from "util/socket";
+import request from "util/request";
 
 const StyledWriteBox = styled.div`
   .alert {
@@ -32,13 +32,12 @@ const StyledWriteBox = styled.div`
 export default function WriteBox() {
 
   const fromId = useSelector((state) => state.auth.user._id);
-  const currentChat = useSelector(({ chats }) => chats.byId[chats.current]);
+  const chat = useSelector(({ chats }) => chats.byId[chats.current]);
 
   const [text, setText] = useState("");
   const [error, setError] = useState(false);
 
   const dispatch = useDispatch();
-  const io = socket.get();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -49,19 +48,14 @@ export default function WriteBox() {
 
     const message = {
       from: fromId,
-      to: currentChat.to._id,
+      to: chat.to._id,
       text,
       date: new Date(),
     };
 
-    io.emit("SEND_MESSAGE", message, (response) => {
-      if (response.error) {
-        setError(true);
-        return;
-      }
-
-      dispatch(addMessage(response.data, currentChat));
-    });
+    request.post("/auth/messages", message)
+      .then((response) => dispatch(addMessage(response.data, chat)))
+      .catch((error) => console.error(error));
 
     setText("");
   };

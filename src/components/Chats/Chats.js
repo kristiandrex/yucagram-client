@@ -35,8 +35,8 @@ export default function Chats() {
     return <Loading />;
   }
 
-  const ListChats = chats.map((_id, index) => (
-    <Chat key={_id} _id={_id} index={index} />
+  const ListChats = chats.map((_id) => (
+    <Chat key={_id} _id={_id} />
   ));
 
   return (

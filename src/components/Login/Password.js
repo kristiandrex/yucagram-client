@@ -1,7 +1,7 @@
 import React, { useRef } from "react";
-import { Link } from "react-router-dom";
-import Layout from "./Layout";
+import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
+import Layout from "./Layout";
 
 export default function Password() {
   const ref = useRef(null);
@@ -12,9 +12,9 @@ export default function Password() {
 
   return (
     <>
-      {/* <Helmet>
+      <Helmet>
         <title>Recuperar contraseña - Yucagram</title>
-      </Helmet> */}
+      </Helmet>
       <Layout>
         <h4 className="text-center">¿Olvidaste la contraseña?</h4>
         <hr />

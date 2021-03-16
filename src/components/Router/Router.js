@@ -1,21 +1,16 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Switch } from "react-router-dom";
+import { Switch } from "wouter";
 import { useSelector, useDispatch } from "react-redux";
-
-import Private from "./Private";
-import Public from "./Public";
+import Loading from "components/UI/Loading";
+import Home from "components/Home";
 import Signin from "components/Login/Signin";
 import Signup from "components/Login/Signup";
-import Home from "components/Home";
-import Loading from "components/UI/Loading";
 import Password from "components/Login/Password";
+import { AuthRoute } from "./AuthRoute";
 import { verifyAuth } from "actions/auth";
 
-export default function Router() {
-  const user = useSelector((state) => state.auth.user);
+function Router() {
   const loading = useSelector((state) => state.auth.loading);
-  const isAuth = user !== null;
-
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,21 +22,13 @@ export default function Router() {
   }
 
   return (
-    <BrowserRouter>
-      <Switch>
-        <Private isAuth={isAuth} exact path="/" >
-          <Home />
-        </Private>
-        <Public isAuth={isAuth} exact path="/signin" >
-          <Signin />
-        </Public>
-        <Public isAuth={isAuth} exact path="/signup" >
-          <Signup />
-        </Public>
-        <Public isAuth={isAuth} exact path="/password">
-          <Password />
-        </Public>
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      <AuthRoute isPrivate path="/" component={Home} />
+      <AuthRoute path="/signup" component={Signup} />
+      <AuthRoute path="/signin" component={Signin} />
+      <AuthRoute path="/password" component={Password} />
+    </Switch>
   );
 }
+
+export default Router;

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
@@ -36,9 +36,11 @@ export default function Home() {
   const totalUnread = useSelector((state) => state.messages.totalUnread);
   const dispatch = useDispatch();
 
-  const title = totalUnread === 0
-    ? "Yucagram"
-    : `Yucagram (${totalUnread})`;
+  const title = useMemo(() => {
+    return totalUnread > 0
+      ? `Yucagram (${totalUnread})`
+      : "Yucagram";
+  }, [totalUnread]);
 
   useEffect(() => {
     const io = socket.get();

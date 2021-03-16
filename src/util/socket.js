@@ -1,5 +1,5 @@
 import { SERVER_URL } from "config";
-import io from "socket.io-client";
+import { io } from "socket.io-client";
 
 let instance;
 
@@ -7,7 +7,7 @@ function get() {
   const token = localStorage.getItem("token");
 
   if (!instance && token) {
-    instance = io(SERVER_URL, { query: { token } });
+    instance = io(SERVER_URL, { extraHeaders: { token } });
   }
 
   return instance;
@@ -16,7 +16,6 @@ function get() {
 function disconnect() {
   instance.disconnect();
   instance = null;
-  return;
 }
 
 const socket = {

@@ -22,20 +22,20 @@ const Styled = styled.div`
   }
 `;
 
-function Chat({ _id, index }) {
+function Chat({ _id }) {
   const chat = useSelector((state) => state.chats.byId[_id]);
   const dispatch = useDispatch();
   const onClick = () => dispatch(setCurrent(_id));
 
   return (
-    <Styled className="border-bottom p-2" onClick={onClick} role="listitem">
+    <Styled className="border-bottom p-2" onClick={onClick}>
       <Avatar user={chat.to} />
       <div className="preview">
         <span className="username">{chat.to.username}</span>
         <Preview chat={chat} />
       </div>
       {
-        chat.unread !== 0 && (
+        chat.unread > 0 && (
           <span className="badge badge-primary">{chat.unread}</span>
         )
       }
