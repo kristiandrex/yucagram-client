@@ -11,7 +11,7 @@ const StyledProfile = styled.div`
 
   .transition-enter-active {
     left: 0;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
   }
 
   .transition-exit {
@@ -20,7 +20,7 @@ const StyledProfile = styled.div`
 
   .transition-exit-active {
     left: -100%;
-    transition: all .3s ease;
+    transition: all 0.3s ease;
   }
 
   .wrapper {
@@ -37,7 +37,7 @@ const StyledProfile = styled.div`
 
     .material-icons {
       cursor: pointer;
-      margin-right: .5rem;
+      margin-right: 0.5rem;
     }
   }
 `;

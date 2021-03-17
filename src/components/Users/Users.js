@@ -14,11 +14,9 @@ export default function Users() {
       <div className="p-2 border-bottom font-weight-bold text-center">
         Usuarios
       </div>
-      {
-        users.map(user =>
-          <User user={user} key={user._id} />
-        )
-      }
+      {users.map((user) => (
+        <User user={user} key={user._id} />
+      ))}
     </div>
   );
 }

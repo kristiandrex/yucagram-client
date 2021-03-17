@@ -14,9 +14,7 @@ function AuthRoute({ isPrivate, ...props }) {
     return <Redirect to="/" />;
   }
 
-  return (
-    <Route {...props} />
-  );
+  return <Route {...props} />;
 }
 
 AuthRoute.propTypes = {
@@ -25,6 +23,4 @@ AuthRoute.propTypes = {
   isPrivate: PropsTypes.bool
 };
 
-export {
-  AuthRoute
-};
+export { AuthRoute };

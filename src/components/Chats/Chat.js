@@ -11,7 +11,7 @@ const Styled = styled.div`
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: .5rem;
+  gap: 0.5rem;
 
   .preview {
     overflow: hidden;
@@ -34,11 +34,9 @@ function Chat({ _id }) {
         <span className="username">{chat.to.username}</span>
         <Preview chat={chat} />
       </div>
-      {
-        chat.unread > 0 && (
-          <span className="badge badge-primary">{chat.unread}</span>
-        )
-      }
+      {chat.unread > 0 && (
+        <span className="badge badge-primary">{chat.unread}</span>
+      )}
     </Styled>
   );
 }

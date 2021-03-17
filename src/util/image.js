@@ -1,6 +1,6 @@
 export function scaleImage(image) {
   const isLandscape = image.width > image.height;
-  
+
   let width;
   let y;
   let x;
@@ -9,9 +9,7 @@ export function scaleImage(image) {
     width = image.height;
     y = 0;
     x = (image.width - image.height) / 2;
-  }
-
-  else {
+  } else {
     width = image.width;
     x = 0;
     y = (image.height - image.width) / 2;

@@ -23,7 +23,8 @@ export default function Chats() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    request.get("/auth/chats")
+    request
+      .get("/auth/chats")
       .then((response) => {
         dispatch(loadChats(response.data));
         setIsLoading(false);
@@ -35,21 +36,17 @@ export default function Chats() {
     return <Loading />;
   }
 
-  const ListChats = chats.map((_id) => (
-    <Chat key={_id} _id={_id} />
-  ));
+  const ListChats = chats.map((_id) => <Chat key={_id} _id={_id} />);
 
   return (
     <StyledChats role="list">
-      {
-        chats.length === 0
-          ? (
-            <div className="empty-chats">
-              <span>No hay chats</span>
-            </div>
-          )
-          : ListChats
-      }
+      {chats.length === 0 ? (
+        <div className="empty-chats">
+          <span>No hay chats</span>
+        </div>
+      ) : (
+        ListChats
+      )}
     </StyledChats>
   );
 }

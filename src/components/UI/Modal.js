@@ -1,9 +1,10 @@
+import React from "react";
 import { createPortal } from "react-dom";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 
 const StyledModal = styled.div`
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   height: 100%;
   width: 100%;
@@ -29,12 +30,7 @@ function Modal({ children, show }) {
     return null;
   }
 
-  return createPortal(
-    <StyledModal>
-      {children}
-    </StyledModal>,
-    root
-  );
+  return createPortal(<StyledModal>{children}</StyledModal>, root);
 }
 
 Modal.propTypes = {

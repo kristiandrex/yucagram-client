@@ -10,7 +10,7 @@ const Styled = styled.div`
   height: 100%;
   overflow: hidden;
 
-  @media (min-width: 576px){
+  @media (min-width: 576px) {
     .profile .material-icons {
       display: none;
     }

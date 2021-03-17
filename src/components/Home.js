@@ -37,9 +37,7 @@ export default function Home() {
   const dispatch = useDispatch();
 
   const title = useMemo(() => {
-    return totalUnread > 0
-      ? `Yucagram (${totalUnread})`
-      : "Yucagram";
+    return totalUnread > 0 ? `Yucagram (${totalUnread})` : "Yucagram";
   }, [totalUnread]);
 
   useEffect(() => {

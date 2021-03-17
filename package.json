@@ -31,8 +31,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint --fix .",
-    "lint:css": "stylelint ./src/**/*.js"
+    "lint": "eslint --fix src/**/*.js",
+    "lint:css": "stylelint drc/**/*.js --syntax css-in-js",
+    "pretty": "prettier --write src/**/*.js"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -51,10 +52,27 @@
   },
   "devDependencies": {
     "eslint": "^7.14.0",
-    "eslint-plugin-react": "^7.21.5",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-react": "^7.22.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.4",
+    "prettier": "2.2.1",
     "stylelint": "^13.8.0",
+    "stylelint-config-prettier": "^8.0.2",
     "stylelint-config-recommended": "^3.0.0",
     "stylelint-config-styled-components": "^0.1.1",
     "stylelint-processor-styled-components": "^1.10.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --cache --fix",
+      "stylelint src/**/*.js --syntax css-in-js"
+    ],
+    "*.{js,css,md}": "prettier --write"
   }
 }

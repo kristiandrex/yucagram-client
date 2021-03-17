@@ -21,14 +21,8 @@ export function mapReverse(array, callback) {
   return A;
 }
 
-function swap(array, index, newIndex) {
-
-}
-
-
 const array = {
-  mapReverse,
-  swap
+  mapReverse
 };
 
 export default array;

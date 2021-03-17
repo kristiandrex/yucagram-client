@@ -1,49 +1,35 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { Link } from "wouter";
-import { Formik } from "formik";
 import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { Helmet } from "react-helmet-async";
 import Layout from "components/Login/Layout";
 import { signin } from "actions/auth";
-import validate from "util/validateSignin";
 import request from "util/request";
 
-export default function Signin() {
+function Signin() {
   const dispatch = useDispatch();
 
-  const onSubmit = async (values) => {
-    try {
-      const response = await request.post("/signin", values);
-      dispatch(signin(response.data));
-    }
+  const handleSubmit = useCallback(
+    (event) => {
+      event.preventDefault();
 
-    catch (error) {
-      console.error(error);
-    }
-  };
+      const values = {
+        username: event.target.username.value,
+        password: event.target.password.value
+      };
 
-  const initialValues = {
-    username: "",
-    password: ""
-  };
+      request
+        .post("/signin", values)
+        .then((response) => dispatch(signin(response.data)))
+        .catch((error) => {
+          console.error(error);
+        });
+    },
+    [dispatch]
+  );
 
   return (
     <Layout>
-      <Formik
-        onSubmit={onSubmit}
-        validate={validate}
-        initialValues={initialValues}
-      >
-        {Form}
-      </Formik>
-    </Layout>
-  );
-}
-
-function Form({ handleSubmit, handleChange, values, errors }) {
-  return (
-    <>
       <Helmet>
         <title>Iniciar sesión - Yucagram</title>
       </Helmet>
@@ -53,24 +39,18 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             type="text"
             name="username"
             placeholder="Nombre de usuario"
-            className={errors.username ? "form-control is-invalid" : "form-control"}
-            onChange={handleChange}
-            value={values.username}
+            className={"form-control"}
             aria-label="Nombre de usuario"
           />
-          {errors.username && <div className="invalid-feedback d-block">{errors.username}</div>}
         </div>
         <div className="form-group">
           <input
             type="password"
             name="password"
             placeholder="Contraseña"
-            className={errors.password ? "form-control is-invalid" : "form-control"}
-            onChange={handleChange}
-            value={values.password}
+            className={"form-control"}
             aria-label="Contraseña"
           />
-          {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
         </div>
         <button className="btn btn-primary btn-block" type="submit">
           Iniciar sesión
@@ -84,13 +64,8 @@ function Form({ handleSubmit, handleChange, values, errors }) {
           </Link>
         </div>
       </form>
-    </>
+    </Layout>
   );
 }
 
-Form.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};
+export default Signin;

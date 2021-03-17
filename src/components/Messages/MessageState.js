@@ -3,9 +3,7 @@ import PropTypes from "prop-types";
 
 export default function MessageState({ seen }) {
   return (
-    <span className="state material-icons">
-      {seen ? "done_all" : "done"}
-    </span>
+    <span className="state material-icons">{seen ? "done_all" : "done"}</span>
   );
 }
 

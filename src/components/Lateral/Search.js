@@ -5,7 +5,7 @@ import useDebounce from "hooks/useDebounce";
 import { search, clearResults, setSearching } from "actions/search";
 
 const StyledSearch = styled.div`
-  align-items: center;  
+  align-items: center;
   display: flex;
 `;
 

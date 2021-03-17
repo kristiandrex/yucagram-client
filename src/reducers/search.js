@@ -9,27 +9,27 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case types.SET_RESULTS: {
-      return {
-        ...state,
-        ...action.payload,
-        loading: false
-      };
-    }
+  case types.SET_RESULTS: {
+    return {
+      ...state,
+      ...action.payload,
+      loading: false
+    };
+  }
 
-    case types.CLEAR_RESULTS: {
-      return initialState;
-    }
+  case types.CLEAR_RESULTS: {
+    return initialState;
+  }
 
-    case types.SET_SEARCHING: {
-      return {
-        ...state,
-        searching: true,
-        loading: true
-      };
-    }
+  case types.SET_SEARCHING: {
+    return {
+      ...state,
+      searching: true,
+      loading: true
+    };
+  }
 
-    default:
-      return state;
+  default:
+    return state;
   }
 }

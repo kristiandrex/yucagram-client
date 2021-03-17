@@ -18,11 +18,12 @@ export function search(value) {
     }
 
     try {
-      const response = await request.post("/auth/search", { value, ignore: filterUsers });
+      const response = await request.post("/auth/search", {
+        value,
+        ignore: filterUsers
+      });
       dispatch(setResults(filterChats, response.data));
-    }
-
-    catch (error) {
+    } catch (error) {
       console.error(error);
       dispatch(clearResults());
     }
@@ -34,7 +35,7 @@ function setResults(chats, users) {
     type: types.SET_RESULTS,
     payload: {
       chats,
-      users,
+      users
     }
   };
 }

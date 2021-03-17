@@ -11,7 +11,7 @@ const StyledResults = styled.div`
     background-color: #fff;
     height: 100%;
     position: absolute;
-    width: 100%;    
+    width: 100%;
   }
 
   .results-enter {
@@ -20,7 +20,7 @@ const StyledResults = styled.div`
 
   .results-enter-active {
     left: 0%;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
   .results-exit {
@@ -29,7 +29,7 @@ const StyledResults = styled.div`
 
   .results-exit-active {
     left: -100%;
-    transition: all .3s;
+    transition: all 0.3s;
   }
 
   .section-title {
@@ -50,11 +50,7 @@ export default function SearchResults() {
 
   // eslint-disable-next-line react/prop-types
   const Title = ({ title }) => {
-    return (
-      <div className="p-2 border-bottom section-title">
-        {title}
-      </div>
-    );
+    return <div className="p-2 border-bottom section-title">{title}</div>;
   };
 
   return (
@@ -67,17 +63,16 @@ export default function SearchResults() {
         nodeRef={nodeRef}
       >
         <div className="results" ref={nodeRef}>
-          {loading
-            ? <Loading />
-            : (
-              <Fragment>
-                {chats.length > 0 && <Title title={"Chats"} />}
-                {ListChats}
-                {users.length > 0 && <Title title={"Usuarios"} />}
-                {ListUsers}
-              </Fragment>
-            )
-          }
+          {loading ? (
+            <Loading />
+          ) : (
+            <Fragment>
+              {chats.length > 0 && <Title title={"Chats"} />}
+              {ListChats}
+              {users.length > 0 && <Title title={"Usuarios"} />}
+              {ListUsers}
+            </Fragment>
+          )}
         </div>
       </CSSTransition>
     </StyledResults>

@@ -4,17 +4,13 @@ export default function validateSignup(values) {
 
   if (!values.username) {
     errors.username = "Este campo es requerido";
-  }
-
-  else if (values.username.includes(" ")) {
+  } else if (values.username.includes(" ")) {
     errors.username = "No debe contener espacios";
   }
 
   if (!values.email) {
     errors.email = "Este campo es requerido";
-  }
-
-  else if (!isEmail.test(values.email)) {
+  } else if (!isEmail.test(values.email)) {
     errors.email = "El correo no es válido";
   }
 

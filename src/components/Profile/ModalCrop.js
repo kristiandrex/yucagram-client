@@ -1,4 +1,4 @@
-import React, { useState, } from "react";
+import React, { useState } from "react";
 import EasyCrop from "react-easy-crop";
 import styled from "styled-components";
 import PropTypes from "prop-types";
@@ -17,7 +17,7 @@ const StyledModalCrop = styled.div`
 
   .zoom-slider {
     margin: auto;
-    display: block;    
+    display: block;
   }
 `;
 
@@ -58,7 +58,9 @@ function ModalCrop({ src, onClose, onSave }) {
           <button className="btn btn-outline-secondary mr-3" onClick={onClose}>
             Cerrar
           </button>
-          <button className="btn btn-primary" onClick={handleSave}>Guardar</button>
+          <button className="btn btn-primary" onClick={handleSave}>
+            Guardar
+          </button>
         </div>
       </div>
     </StyledModalCrop>

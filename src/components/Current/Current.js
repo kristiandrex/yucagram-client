@@ -18,14 +18,14 @@ const Styled = styled.div`
     color: #fff;
     font-weight: bold;
     display: flex;
-    gap: .5rem;
+    gap: 0.5rem;
     align-items: center;
   }
 
   @media (max-width: 576px) {
     position: absolute;
-    transition: all .3s ease;
-    right: ${({ active }) => active ? "0" : "-100%"};
+    transition: all 0.3s ease;
+    right: ${({ active }) => (active ? "0" : "-100%")};
 
     .header .material-icons {
       display: block;
@@ -74,11 +74,11 @@ export default function Current() {
         <Avatar user={user} />
         <span className="username">{user.username}</span>
       </div>
-      {
-        current.role === "CHAT"
-          ? <Chat chat={current} />
-          : <User user={current} />
-      }
+      {current.role === "CHAT" ? (
+        <Chat chat={current} />
+      ) : (
+        <User user={current} />
+      )}
     </Styled>
   );
 }

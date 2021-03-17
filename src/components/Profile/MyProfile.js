@@ -17,7 +17,7 @@ export default function MyProfile() {
   return (
     <div className="my-profile">
       <SideProfile show={show} onClose={handleClose} />
-      <ProfileCard user={user} >
+      <ProfileCard user={user}>
         <Dropdown>
           <Dropdown.Toggle>
             <span className="material-icons text-white">more_vert</span>

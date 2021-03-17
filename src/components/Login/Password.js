@@ -28,7 +28,9 @@ export default function Password() {
               ref={ref}
             />
           </div>
-          <button className="btn btn-primary btn-block">Recuperar contraseña</button>
+          <button className="btn btn-primary btn-block">
+            Recuperar contraseña
+          </button>
         </form>
         <div className="btn-group btn-block mt-3">
           <Link className="btn btn-link btn-sm" to="/signin">

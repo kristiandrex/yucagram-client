@@ -5,7 +5,7 @@ import MessageState from "components/Messages/MessageState";
 import { useSelector } from "react-redux";
 
 const Styled = styled.div`
-  font-size: .85rem;    
+  font-size: 0.85rem;
   display: flex;
   justify-content: space-between;
 
@@ -16,15 +16,15 @@ const Styled = styled.div`
   }
 
   .details {
-    font-size: .85rem;
+    font-size: 0.85rem;
     display: flex;
     align-items: center;
-    gap: .5rem;
-    margin-left: .5rem;
+    gap: 0.5rem;
+    margin-left: 0.5rem;
   }
 
   .details .state {
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 `;
 
@@ -49,9 +49,7 @@ export default function Preview({ chat }) {
 
   return (
     <Styled>
-      <div className="content">
-        {message.text}
-      </div>
+      <div className="content">{message.text}</div>
       <div className="details">
         {isOut && <MessageState seen={message.seen} />}
         <span className="date">

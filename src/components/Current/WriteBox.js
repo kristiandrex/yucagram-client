@@ -6,7 +6,7 @@ import request from "util/request";
 
 const StyledWriteBox = styled.div`
   .alert {
-    border-radius: .25rem .25rem 0 0;
+    border-radius: 0.25rem 0.25rem 0 0;
     border-bottom: none;
     position: relative;
     display: flex;
@@ -30,7 +30,6 @@ const StyledWriteBox = styled.div`
 `;
 
 export default function WriteBox() {
-
   const fromId = useSelector((state) => state.auth.user._id);
   const chat = useSelector(({ chats }) => chats.byId[chats.current]);
 
@@ -50,10 +49,11 @@ export default function WriteBox() {
       from: fromId,
       to: chat.to._id,
       text,
-      date: new Date(),
+      date: new Date()
     };
 
-    request.post("/auth/messages", message)
+    request
+      .post("/auth/messages", message)
       .then((response) => dispatch(addMessage(response.data, chat)))
       .catch((error) => console.error(error));
 
@@ -65,16 +65,14 @@ export default function WriteBox() {
 
   return (
     <StyledWriteBox className="shadow">
-      {
-        error && (
-          <div className="alert alert-primary m-0" role="alert">
-            <span>Hubo un error al enviar el mensaje, intenta de nuevo.</span>
-            <button aria-label="Cerrar" onClick={handleClose}>
-              <span className="material-icons">clear</span>
-            </button>
-          </div>
-        )
-      }
+      {error && (
+        <div className="alert alert-primary m-0" role="alert">
+          <span>Hubo un error al enviar el mensaje, intenta de nuevo.</span>
+          <button aria-label="Cerrar" onClick={handleClose}>
+            <span className="material-icons">clear</span>
+          </button>
+        </div>
+      )}
       <form className="p-2 border-top" onSubmit={handleSubmit}>
         <input
           type="text"

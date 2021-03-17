@@ -37,7 +37,7 @@ const Styled = styled.div`
   .details .date,
   .details .state {
     display: inline-block;
-    font-size: .85rem;
+    font-size: 0.85rem;
   }
 
   .message-row.own .message {

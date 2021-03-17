@@ -17,9 +17,7 @@ export default function Signup() {
     try {
       const response = await request.post("/signup", values);
       dispatch(signup(response.data));
-    }
-
-    catch (error) {
+    } catch (error) {
       const errors = error.response.data;
       console.log(errors);
     }
@@ -40,7 +38,6 @@ export default function Signup() {
   );
 }
 
-
 function Form({ handleSubmit, handleChange, values, errors }) {
   return (
     <>
@@ -53,36 +50,48 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             type="text"
             name="username"
             placeholder="Nombre de usuario"
-            className={errors.username ? "form-control is-invalid" : "form-control"}
+            className={
+              errors.username ? "form-control is-invalid" : "form-control"
+            }
             onChange={handleChange}
             value={values.username}
             aria-label="Nombre de usuario"
           />
-          {errors.username && <div className="invalid-feedback d-block">{errors.username}</div>}
+          {errors.username && (
+            <div className="invalid-feedback d-block">{errors.username}</div>
+          )}
         </div>
         <div className="form-group">
           <input
             type="email"
             name="email"
             placeholder="Correo electrónico"
-            className={errors.email ? "form-control is-invalid" : "form-control"}
+            className={
+              errors.email ? "form-control is-invalid" : "form-control"
+            }
             onChange={handleChange}
             value={values.email}
             aria-label="Correo electrónico"
           />
-          {errors.email && <div className="invalid-feedback d-block">{errors.email}</div>}
+          {errors.email && (
+            <div className="invalid-feedback d-block">{errors.email}</div>
+          )}
         </div>
         <div className="form-group">
           <input
             type="password"
             name="password"
             placeholder="Contraseña"
-            className={errors.password ? "form-control is-invalid" : "form-control"}
+            className={
+              errors.password ? "form-control is-invalid" : "form-control"
+            }
             onChange={handleChange}
             value={values.password}
             aria-label="Contraseña"
           />
-          {errors.password && <div className="invalid-feedback d-block">{errors.password}</div>}
+          {errors.password && (
+            <div className="invalid-feedback d-block">{errors.password}</div>
+          )}
         </div>
         <button className="btn btn-primary btn-block" type="submit">
           Regístrate

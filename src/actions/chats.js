@@ -3,11 +3,18 @@ import request from "util/request";
 import types from "types";
 
 export function loadChats(chats) {
-  const totalUnread = chats.reduce((previus, current) => (previus + current.unread), 0);
-  
+  const totalUnread = chats.reduce(
+    (previus, current) => previus + current.unread,
+    0
+  );
+
   const idAttribute = "_id";
   const messageSchema = new schema.Entity("messages", {}, { idAttribute });
-  const chatSchema = new schema.Entity("chats", { messages: [messageSchema] }, { idAttribute });
+  const chatSchema = new schema.Entity(
+    "chats",
+    { messages: [messageSchema] },
+    { idAttribute }
+  );
   const { entities } = normalize(chats, [chatSchema]);
 
   return {
@@ -29,9 +36,7 @@ export function createChat(user) {
     try {
       const response = await request.post("/auth/chats", { user });
       dispatch({ type: types.CREATE_CHAT, payload: response.data });
-    }
-
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };
@@ -42,9 +47,7 @@ export function addChat(user) {
     try {
       const response = await request.get(`/auth/chats/${user}`);
       dispatch({ type: types.ADD_CHAT, payload: response.data });
-    }
-
-    catch (error) {
+    } catch (error) {
       console.log(error);
     }
   };

@@ -95,7 +95,7 @@ export default function AvatarViewer() {
 
   return (
     <StyledAvatarChooser className="mb-4">
-      <Modal show={error.show} >
+      <Modal show={error.show}>
         <div className="bg-light p-3 shadow-sm rounded" role="alert">
           <p>{error.message}</p>
           <button
@@ -108,11 +108,7 @@ export default function AvatarViewer() {
         </div>
       </Modal>
       <Modal show={show}>
-        <ModalCrop
-          src={url}
-          onClose={handleClose}
-          onSave={handleSave}
-        />
+        <ModalCrop src={url} onClose={handleClose} onSave={handleSave} />
       </Modal>
       <img
         src={avatar}

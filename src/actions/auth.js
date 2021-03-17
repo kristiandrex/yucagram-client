@@ -23,9 +23,7 @@ function signinToken() {
     try {
       const response = await request.get("/auth");
       dispatch(setUser(response.data));
-    }
-
-    catch (error) {
+    } catch (error) {
       dispatch(signout());
       console.error(error);
     }

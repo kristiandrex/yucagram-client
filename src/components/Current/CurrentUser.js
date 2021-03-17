@@ -24,7 +24,9 @@ export default function CurrentUser({ user }) {
       <div className="wrapper">
         <div className="card">
           <div className="card-body">
-            <button className="btn btn-primary" onClick={handleAdd}>Agregar chat</button>
+            <button className="btn btn-primary" onClick={handleAdd}>
+              Agregar chat
+            </button>
           </div>
         </div>
       </div>
