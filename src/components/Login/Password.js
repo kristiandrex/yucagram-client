@@ -1,11 +1,9 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Link } from "wouter";
 import { Helmet } from "react-helmet-async";
-import Layout from "./Layout";
+import LoginLayout from "./LoginLayout";
 
 export default function Password() {
-  const ref = useRef(null);
-
   const handleOnSubmit = (event) => {
     event.preventDefault();
   };
@@ -15,17 +13,14 @@ export default function Password() {
       <Helmet>
         <title>Recuperar contraseña - Yucagram</title>
       </Helmet>
-      <Layout>
-        <h4 className="text-center">¿Olvidaste la contraseña?</h4>
-        <hr />
-        <form onSubmit={handleOnSubmit}>
+      <LoginLayout>
+        <form noValidate onSubmit={handleOnSubmit}>
           <div className="form-group">
             <input
               type="text"
               className="form-control"
               placeholder="Correo electrónico"
               aria-label="Correo electrónico"
-              ref={ref}
             />
           </div>
           <button className="btn btn-primary btn-block">
@@ -40,7 +35,7 @@ export default function Password() {
             Regístrate
           </Link>
         </div>
-      </Layout>
+      </LoginLayout>
     </>
   );
 }

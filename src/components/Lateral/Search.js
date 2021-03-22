@@ -1,13 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import styled from "styled-components";
 import useDebounce from "hooks/useDebounce";
 import { search, clearResults, setSearching } from "actions/search";
-
-const StyledSearch = styled.div`
-  align-items: center;
-  display: flex;
-`;
 
 export default function Search() {
   const searching = useSelector((state) => state.search.searching);
@@ -15,30 +9,33 @@ export default function Search() {
   const debounce = useDebounce(value);
   const dispatch = useDispatch();
 
-  const handleSearch = (event) => {
-    const newValue = event.target.value;
-
-    if (newValue.trim().length === 0) {
-      return handleClear();
-    }
-
-    dispatch(setSearching());
-    setValue(newValue);
-  };
-
-  const handleClear = () => {
+  const handleClear = useCallback(() => {
     setValue("");
     dispatch(clearResults());
-  };
+  }, [dispatch]);
+
+  const handleSearch = useCallback(
+    (event) => {
+      const newValue = event.target.value;
+
+      if (newValue.trim().length === 0) {
+        return handleClear();
+      }
+
+      dispatch(setSearching());
+      setValue(newValue);
+    },
+    [dispatch, handleClear]
+  );
 
   useEffect(() => {
-    if (debounce.length > 0) {
+    if (debounce !== "") {
       dispatch(search(debounce));
     }
   }, [debounce, dispatch]);
 
   return (
-    <StyledSearch className="border-bottom p-2" role="search">
+    <div className="border-bottom p-2 d-flex align-items-center" role="search">
       <input
         type="text"
         className="form-control"
@@ -58,6 +55,6 @@ export default function Search() {
           clear
         </span>
       )}
-    </StyledSearch>
+    </div>
   );
 }

@@ -2,7 +2,7 @@ import types from "types";
 import request from "util/request";
 
 export function search(value) {
-  return async (dispatch, getState) => {
+  return (dispatch, getState) => {
     const user = getState().auth.user.username;
     const allChats = getState().chats.byId;
     const filterChats = [];
@@ -10,40 +10,38 @@ export function search(value) {
 
     for (const key in allChats) {
       const chat = allChats[key];
+      const username = chat.to.username;
 
-      if (chat.to.username.includes(value)) {
-        filterChats.push(chat._id);
-        filterUsers.push(chat.to.username);
+      if (username.includes(value)) {
+        filterChats.push(key);
+        filterUsers.push(username);
       }
     }
 
-    try {
-      const response = await request.post("/auth/search", {
+    dispatch(setChatsResults(filterChats));
+
+    request
+      .post("/auth/search", {
         value,
         ignore: filterUsers
-      });
-      dispatch(setResults(filterChats, response.data));
-    } catch (error) {
-      console.error(error);
-      dispatch(clearResults());
-    }
+      })
+      .then((response) => dispatch(setUsersResults(response.data)))
+      .catch((error) => console.error(error));
   };
 }
 
-function setResults(chats, users) {
-  return {
-    type: types.SET_RESULTS,
-    payload: {
-      chats,
-      users
-    }
-  };
+function setChatsResults(chats) {
+  return { type: types.SET_CHATS_RESULTS, payload: chats };
+}
+
+function setUsersResults(users) {
+  return { type: types.SET_USERS_RESULTS, payload: users };
 }
 
 export function clearResults() {
   return { type: types.CLEAR_RESULTS };
 }
 
-export function setSearching() {
-  return { type: types.SET_SEARCHING };
+export function setSearching(loading) {
+  return { type: types.SET_SEARCHING, payload: loading };
 }

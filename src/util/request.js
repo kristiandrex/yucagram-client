@@ -1,10 +1,11 @@
 import axios from "axios";
 import { SERVER_URL } from "config";
 
-function get(url) {
+function get(url, params) {
   const token = localStorage.getItem("token");
   return axios.get(`${SERVER_URL}${url}`, {
-    headers: { authorization: token }
+    headers: { authorization: token },
+    params
   });
 }
 

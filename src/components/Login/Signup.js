@@ -1,50 +1,57 @@
-import React from "react";
-import { Formik } from "formik";
+import React, { useState } from "react";
+import { useFormik } from "formik";
 import { Link } from "wouter";
 import { useDispatch } from "react-redux";
-import PropTypes from "prop-types";
 import { Helmet } from "react-helmet-async";
-
-import Layout from "./Layout";
-import validate from "util/validateSignup";
+import LoginLayout from "./LoginLayout";
 import request from "util/request";
 import { signup } from "actions/auth";
+import { validateSignup as validate } from "util/validate";
+
+const initialValues = {
+  username: "",
+  email: "",
+  password: ""
+};
 
 export default function Signup() {
   const dispatch = useDispatch();
+  const [showAlert, setShowAlert] = useState(false);
 
-  const onSubmit = async (values) => {
-    try {
-      const response = await request.post("/signup", values);
-      dispatch(signup(response.data));
-    } catch (error) {
-      const errors = error.response.data;
-      console.log(errors);
-    }
-  };
-
-  const initialValues = { username: "", email: "", password: "" };
+  const {
+    handleSubmit,
+    handleChange,
+    setSubmitting,
+    values,
+    errors,
+    isSubmitting
+  } = useFormik({
+    initialValues,
+    onSubmit: (values) => {
+      request
+        .post("/signup", values)
+        .then((response) => dispatch(signup(response.data)))
+        .catch((error) => {
+          setSubmitting(false);
+          setShowAlert(true);
+          console.error(error);
+        });
+    },
+    validate,
+    validateOnChange: false
+  });
 
   return (
-    <Layout>
-      <Formik
-        onSubmit={onSubmit}
-        validate={validate}
-        initialValues={initialValues}
-      >
-        {Form}
-      </Formik>
-    </Layout>
-  );
-}
-
-function Form({ handleSubmit, handleChange, values, errors }) {
-  return (
-    <>
+    <LoginLayout>
       <Helmet>
         <title>Registrarse - Yucagram</title>
       </Helmet>
       <form noValidate onSubmit={handleSubmit}>
+        {showAlert && (
+          <div className="alert alert-danger text-center" role="alert">
+            Hubo un error, intenta más tarde.
+          </div>
+        )}
         <div className="form-group">
           <input
             type="text"
@@ -56,6 +63,7 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             onChange={handleChange}
             value={values.username}
             aria-label="Nombre de usuario"
+            required
           />
           {errors.username && (
             <div className="invalid-feedback d-block">{errors.username}</div>
@@ -72,6 +80,7 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             onChange={handleChange}
             value={values.email}
             aria-label="Correo electrónico"
+            required
           />
           {errors.email && (
             <div className="invalid-feedback d-block">{errors.email}</div>
@@ -88,25 +97,23 @@ function Form({ handleSubmit, handleChange, values, errors }) {
             onChange={handleChange}
             value={values.password}
             aria-label="Contraseña"
+            required
           />
           {errors.password && (
             <div className="invalid-feedback d-block">{errors.password}</div>
           )}
         </div>
-        <button className="btn btn-primary btn-block" type="submit">
-          Regístrate
+        <button
+          className="btn btn-primary btn-block"
+          type="submit"
+          disabled={isSubmitting}
+        >
+          {isSubmitting ? "Cargando..." : "Regístrate"}
         </button>
       </form>
       <Link className="btn btn-link btn-sm btn-block mt-3" to="/signin">
         Inicia sesión
       </Link>
-    </>
+    </LoginLayout>
   );
 }
-
-Form.propTypes = {
-  handleSubmit: PropTypes.func.isRequired,
-  handleChange: PropTypes.func.isRequired,
-  values: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
-};

@@ -24,8 +24,8 @@ function Router() {
   return (
     <Switch>
       <AuthRoute isPrivate path="/" component={Home} />
-      <AuthRoute path="/signup" component={Signup} />
       <AuthRoute path="/signin" component={Signin} />
+      <AuthRoute path="/signup" component={Signup} />
       <AuthRoute path="/password" component={Password} />
     </Switch>
   );

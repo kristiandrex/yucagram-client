@@ -4,8 +4,7 @@ import types from "types";
 
 export function loadChats(chats) {
   const totalUnread = chats.reduce(
-    (previus, current) => previus + current.unread,
-    0
+    (previus, current) => previus + current.unread
   );
 
   const idAttribute = "_id";
@@ -32,24 +31,24 @@ export function setCurrent(payload) {
 }
 
 export function createChat(user) {
-  return async function (dispatch) {
-    try {
-      const response = await request.post("/auth/chats", { user });
-      dispatch({ type: types.CREATE_CHAT, payload: response.data });
-    } catch (error) {
-      console.log(error);
-    }
+  return function (dispatch) {
+    request
+      .post("/auth/chats", { user })
+      .then((response) => {
+        dispatch({ type: types.CREATE_CHAT, payload: response.data });
+      })
+      .catch((error) => console.error(error));
   };
 }
 
 export function addChat(user) {
-  return async function (dispatch) {
-    try {
-      const response = await request.get(`/auth/chats/${user}`);
-      dispatch({ type: types.ADD_CHAT, payload: response.data });
-    } catch (error) {
-      console.log(error);
-    }
+  return function (dispatch) {
+    request
+      .get(`/auth/chats/${user}`)
+      .then((response) => {
+        dispatch({ type: types.ADD_CHAT, payload: response.data });
+      })
+      .catch((error) => console.error(error));
   };
 }
 

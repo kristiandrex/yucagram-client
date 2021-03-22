@@ -39,7 +39,7 @@ export default function Chats() {
   const ListChats = chats.map((_id) => <Chat key={_id} _id={_id} />);
 
   return (
-    <StyledChats role="list">
+    <StyledChats>
       {chats.length === 0 ? (
         <div className="empty-chats">
           <span>No hay chats</span>

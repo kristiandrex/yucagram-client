@@ -5,6 +5,7 @@ import styled from "styled-components";
 import Loading from "components/UI/Loading";
 import Chat from "components/Chats/Chat";
 import User from "components/Users/User";
+import { useMemo } from "react";
 
 const StyledResults = styled.div`
   .results {
@@ -45,12 +46,16 @@ export default function SearchResults() {
   const chats = useSelector((state) => state.search.chats);
   const nodeRef = useRef(null);
 
+  const isEmpty = useMemo(() => {
+    return users.length === 0 && chats.length === 0;
+  }, [users, chats]);
+
   const ListChats = chats.map((chat) => <Chat key={chat} _id={chat} />);
   const ListUsers = users.map((user) => <User key={user._id} user={user} />);
 
-  // eslint-disable-next-line react/prop-types
-  const Title = ({ title }) => {
-    return <div className="p-2 border-bottom section-title">{title}</div>;
+  //eslint-disable-next-line
+  const Title = ({ children }) => {
+    return <div className="p-2 border-bottom section-title">{children}</div>;
   };
 
   return (
@@ -65,11 +70,15 @@ export default function SearchResults() {
         <div className="results" ref={nodeRef}>
           {loading ? (
             <Loading />
+          ) : isEmpty ? (
+            <div className="p-2 border-bottom text-center">
+              No se encontraron chats o usuarios.
+            </div>
           ) : (
             <Fragment>
-              {chats.length > 0 && <Title title={"Chats"} />}
+              {chats.length > 0 && <Title>Chats</Title>}
               {ListChats}
-              {users.length > 0 && <Title title={"Usuarios"} />}
+              {users.length > 0 && <Title>Usuarios</Title>}
               {ListUsers}
             </Fragment>
           )}
