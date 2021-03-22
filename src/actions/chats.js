@@ -4,7 +4,8 @@ import types from "types";
 
 export function loadChats(chats) {
   const totalUnread = chats.reduce(
-    (previus, current) => previus + current.unread
+    (previus, current) => previus + current.unread,
+    0
   );
 
   const idAttribute = "_id";
