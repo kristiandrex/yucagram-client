@@ -6,6 +6,11 @@ import Router from "components/Router/Router";
 import store from "store";
 
 const GlobalStyled = createGlobalStyle`
+  :root {
+    --hover-background: #f5f5f5;
+    --current-background: #E6E6E6;
+  }
+
   html,
   body,
   #root {

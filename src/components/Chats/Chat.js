@@ -13,6 +13,14 @@ const Styled = styled.div`
   align-items: center;
   gap: 0.5rem;
 
+  &:hover {
+    background-color: var(--hover-background);
+  }
+
+  &.current {
+    background-color: var(--current-background);
+  }
+
   .preview {
     overflow: hidden;
   }
@@ -23,12 +31,16 @@ const Styled = styled.div`
 `;
 
 function Chat({ _id }) {
+  const isCurrent = useSelector((state) => state.chats.current === _id);
   const chat = useSelector((state) => state.chats.byId[_id]);
   const dispatch = useDispatch();
   const onClick = () => dispatch(setCurrent(_id));
 
   return (
-    <Styled className="border-bottom p-2" onClick={onClick}>
+    <Styled
+      className={isCurrent ? "border-bottom p-2 current" : "border-bottom p-2"}
+      onClick={onClick}
+    >
       <Avatar user={chat.to} />
       <div className="preview">
         <span className="username">{chat.to.username}</span>

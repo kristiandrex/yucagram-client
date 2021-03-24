@@ -1,24 +1,36 @@
 import React, { memo } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 import Avatar from "components/Avatar";
 import { setCurrent } from "actions/chats";
 
+const StyledUser = styled.div`
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--hover-background);
+  }
+`;
+
 function User({ user }) {
+  const isCurrent = useSelector((state) => state.chats.current === user._id);
+
   const dispatch = useDispatch();
   const handleClick = () => dispatch(setCurrent(user));
 
   return (
-    <div
+    <StyledUser
       key={user._id}
-      className="border-bottom p-2 d-flex align-items-center"
-      style={{ cursor: "pointer" }}
+      className={isCurrent ? "border-bottom p-2 current" : "border-bottom p-2"}
       onClick={handleClick}
       tabIndex="0"
     >
       <Avatar user={user} />
       <span className="ml-2 font-weight-bold">{user.username}</span>
-    </div>
+    </StyledUser>
   );
 }
 
