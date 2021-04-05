@@ -15,7 +15,9 @@ function ForgotPassword() {
 
     request({ method: "post", url: "/forgot-password", data: { email } })
       .then(() => setSuccess(true))
-      .catch((error) => setAlert({ show: true, message: error.response.data }))
+      .catch((error) =>
+        setAlert({ show: true, message: error.response.data.message })
+      )
       .finally(() => setSubmitting(false));
   }, []);
 
