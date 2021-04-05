@@ -1,4 +1,4 @@
-import React, { useRef, Fragment } from "react";
+import { useRef, Fragment } from "react";
 import { useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";

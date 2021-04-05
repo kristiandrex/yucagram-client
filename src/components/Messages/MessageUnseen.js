@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 import { useDispatch } from "react-redux";
 import { MessageCTX } from "./MessageProvider";

@@ -33,8 +33,7 @@ export function setCurrent(payload) {
 
 export function createChat(user) {
   return function (dispatch) {
-    request
-      .post("/auth/chats", { user })
+    request({ method: "post", url: "/auth/chats", data: { user } })
       .then((response) => {
         dispatch({ type: types.CREATE_CHAT, payload: response.data });
       })
@@ -44,8 +43,7 @@ export function createChat(user) {
 
 export function addChat(user) {
   return function (dispatch) {
-    request
-      .get(`/auth/chats/${user}`)
+    request({ method: "get", url: `/auth/chats/${user}` })
       .then((response) => {
         dispatch({ type: types.ADD_CHAT, payload: response.data });
       })

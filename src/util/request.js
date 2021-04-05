@@ -1,32 +1,19 @@
 import axios from "axios";
 import { SERVER_URL } from "config";
 
-function get(url, params) {
-  const token = localStorage.getItem("token");
-  return axios.get(`${SERVER_URL}${url}`, {
-    headers: { authorization: token },
-    params
-  });
-}
+axios.defaults.baseURL = SERVER_URL;
 
-function post(url, data) {
-  const token = localStorage.getItem("token");
-  return axios.post(`${SERVER_URL}${url}`, data, {
-    headers: { authorization: token }
-  });
-}
+function request(options) {
+  if (!options.headers) {
+    options.headers = {};
+  }
 
-function del(url) {
-  const token = localStorage.getItem("token");
-  return axios.delete(`${SERVER_URL}${url}`, {
-    headers: { authorization: token }
-  });
-}
+  if (!options.headers.authorization) {
+    const token = window.localStorage.getItem("token");
+    options.headers.authorization = `Bearer ${token}`;
+  }
 
-const request = {
-  post,
-  get,
-  delete: del
-};
+  return axios.request(options);
+}
 
 export default request;

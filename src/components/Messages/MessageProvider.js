@@ -1,4 +1,4 @@
-import React, { memo, createContext } from "react";
+import { memo, createContext } from "react";
 import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import Message from "./Message";

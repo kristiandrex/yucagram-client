@@ -1,9 +1,8 @@
-import React from "react";
+import { forwardRef, useContext } from "react";
 import MessageState from "./MessageState";
-import { useContext } from "react";
 import { MessageCTX } from "./MessageProvider";
 
-const Message = React.forwardRef((_, ref) => {
+const Message = forwardRef((_, ref) => {
   const { isOut, message } = useContext(MessageCTX);
   const date = new Date(message.date);
 

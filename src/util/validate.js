@@ -4,7 +4,10 @@ const REQUIRED = "Este campo es requerido.";
 
 async function validateField(field, value) {
   try {
-    const response = await request.get(`/validate/${field}?value=${value}`);
+    const response = await request({
+      method: "get",
+      url: `/validate/${field}?value=${value}`
+    });
     const { available, message } = response.data;
 
     if (!available) {

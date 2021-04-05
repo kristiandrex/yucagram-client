@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import { addMessage } from "actions/messages";
@@ -52,8 +52,7 @@ export default function WriteBox() {
       date: new Date()
     };
 
-    request
-      .post("/auth/messages", message)
+    request({ method: "post", url: "/auth/messages", data: message })
       .then((response) => dispatch(addMessage(response.data, chat)))
       .catch((error) => console.error(error));
 

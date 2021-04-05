@@ -1,10 +1,9 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
-
-import Lateral from "./Lateral/Lateral";
-import Current from "./Current/Current";
+import Lateral from "components/Lateral/Lateral";
+import Current from "components/Current/Current";
 import socket from "util/socket";
 import { messageIn, readMessage } from "actions/messages";
 import bell from "assets/bell.mp3";

@@ -1,21 +1,16 @@
-import React from "react";
 import PropTypes from "prop-types";
 
-export default function Layout({ children }) {
+export default function LoginLayout({ children }) {
   return (
-    <div className="row no-gutters h-100 d-flex justify-content-center">
-      <div className="col-10 col-md-4 col-lg-3 d-flex align-items-center">
-        <div className="card w-100">
-          <div className="card-body shadow-sm">
-            <h1 className="text-center mb-4">Yucagram</h1>
-            {children}
-          </div>
-        </div>
+    <div className="card">
+      <div className="card-body text-center shadow-sm">
+        <h1 className="text-center mb-4">Yucagram</h1>
+        {children}
       </div>
     </div>
   );
 }
 
-Layout.propTypes = {
+LoginLayout.propTypes = {
   children: PropTypes.node
 };

@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 import MyProfile from "components/Profile/MyProfile";
 import Search from "components/Lateral/Search";

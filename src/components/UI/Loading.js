@@ -1,5 +1,3 @@
-import React from "react";
-
 export default function Loading() {
   return (
     <div className="d-flex h-100 w-100 align-items-center justify-content-center">

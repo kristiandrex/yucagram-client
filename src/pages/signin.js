@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { Link } from "wouter";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet-async";
 import { useFormik } from "formik";
@@ -15,7 +14,7 @@ const initialValues = {
 
 function Signin() {
   const dispatch = useDispatch();
-  const [serverError, setServerError] = useState({
+  const [alert, setAlert] = useState({
     show: false,
     message: ""
   });
@@ -30,20 +29,15 @@ function Signin() {
   } = useFormik({
     initialValues,
     onSubmit: (values) => {
-      setServerError({ show: false, message: "" });
+      setAlert({ show: false, message: "" });
 
-      request
-        .post("/signin", values)
+      request({ method: "post", url: "/signin", data: values })
         .then((response) => dispatch(signin(response.data)))
         .catch((error) => {
-          const { status } = error.response;
           setSubmitting(false);
-          setServerError({
+          setAlert({
             show: true,
-            message:
-              status === 400
-                ? "El usuario y la contraseña no coinciden."
-                : "Hubo un error, intenta más tarde."
+            message: error.response.data.message
           });
         });
     },
@@ -55,10 +49,10 @@ function Signin() {
       <Helmet>
         <title>Iniciar sesión - Yucagram</title>
       </Helmet>
-      <form noValidate onSubmit={handleSubmit}>
-        {serverError.show && (
+      <form onSubmit={handleSubmit} className="text-center" noValidate>
+        {alert.show && (
           <div className="alert alert-danger text-center" role="alert">
-            {serverError.message}
+            {alert.message}
           </div>
         )}
         <div className="form-group">
@@ -96,20 +90,12 @@ function Signin() {
           )}
         </div>
         <button
-          className="btn btn-primary btn-block"
+          className="btn btn-primary"
           type="submit"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Cargando..." : "Iniciar sesión"}
+          Iniciar sesión
         </button>
-        <div className="btn-group btn-block mt-3">
-          <Link className="btn btn-link btn-sm" to="/password">
-            ¿Olvidaste la contraseña?
-          </Link>
-          <Link className="btn btn-link btn-sm" to="/signup">
-            Regístrate
-          </Link>
-        </div>
       </form>
     </LoginLayout>
   );

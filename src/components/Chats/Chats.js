@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
 import Chat from "components/Chats/Chat";
@@ -23,8 +23,7 @@ export default function Chats() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    request
-      .get("/auth/chats")
+    request({ method: "get", url: "/auth/chats" })
       .then((response) => {
         dispatch(loadChats(response.data));
         setIsLoading(false);

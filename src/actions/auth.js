@@ -21,7 +21,7 @@ export function signup(payload) {
 function signinToken() {
   return async function (dispatch) {
     try {
-      const response = await request.get("/auth");
+      const response = await request({ method: "get", url: "/auth" });
       dispatch(setUser(response.data));
     } catch (error) {
       dispatch(signout());

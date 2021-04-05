@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import { useRef } from "react";
 import styled from "styled-components";
 import { CSSTransition } from "react-transition-group";
 import AvatarViewer from "./AvatarViewer";

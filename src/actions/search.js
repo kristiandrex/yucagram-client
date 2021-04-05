@@ -20,11 +20,14 @@ export function search(value) {
 
     dispatch(setChatsResults(filterChats));
 
-    request
-      .post("/auth/search", {
+    request({
+      method: "post",
+      url: "/auth/search",
+      data: {
         value,
         ignore: filterUsers
-      })
+      }
+    })
       .then((response) => dispatch(setUsersResults(response.data)))
       .catch((error) => console.error(error));
   };

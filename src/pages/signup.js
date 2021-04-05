@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useFormik } from "formik";
-import { Link } from "wouter";
 import { useDispatch } from "react-redux";
 import { Helmet } from "react-helmet-async";
-import LoginLayout from "./LoginLayout";
+import LoginLayout from "components/Login/LoginLayout";
 import request from "util/request";
 import { signup } from "actions/auth";
 import { validateSignup as validate } from "util/validate";
@@ -28,8 +27,7 @@ export default function Signup() {
   } = useFormik({
     initialValues,
     onSubmit: (values) => {
-      request
-        .post("/signup", values)
+      request({ method: "post", url: "/signup", data: values })
         .then((response) => dispatch(signup(response.data)))
         .catch((error) => {
           setSubmitting(false);
@@ -46,7 +44,7 @@ export default function Signup() {
       <Helmet>
         <title>Registrarse - Yucagram</title>
       </Helmet>
-      <form noValidate onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="text-center" noValidate>
         {showAlert && (
           <div className="alert alert-danger text-center" role="alert">
             Hubo un error, intenta más tarde.
@@ -104,16 +102,13 @@ export default function Signup() {
           )}
         </div>
         <button
-          className="btn btn-primary btn-block"
+          className="btn btn-primary"
           type="submit"
           disabled={isSubmitting}
         >
-          {isSubmitting ? "Cargando..." : "Regístrate"}
+          Registrarse
         </button>
       </form>
-      <Link className="btn btn-link btn-sm btn-block mt-3" to="/signin">
-        Inicia sesión
-      </Link>
     </LoginLayout>
   );
 }

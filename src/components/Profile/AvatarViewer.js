@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
 import Modal from "components/UI/Modal";
@@ -78,7 +78,11 @@ export default function AvatarViewer() {
       formData.append("avatar", fileRef.current.files[0]);
       formData.append("area", JSON.stringify(croppedArea));
 
-      const response = await request.post("/auth/upload/avatar", formData);
+      const response = await request({
+        method: "post",
+        url: "/auth/upload/avatar",
+        data: formData
+      });
       dispatch(changeAvatar(response.data));
       handleClose();
     } catch (error) {

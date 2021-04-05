@@ -1,8 +1,7 @@
-import React from "react";
 import { Provider } from "react-redux";
 import { createGlobalStyle } from "styled-components";
 import { HelmetProvider } from "react-helmet-async";
-import Router from "components/Router/Router";
+import Router from "router";
 import store from "store";
 
 const GlobalStyled = createGlobalStyle`
