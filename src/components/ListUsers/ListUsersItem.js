@@ -15,7 +15,7 @@ const StyledUser = styled.div`
   }
 `;
 
-function User({ user }) {
+function ListUsersItem({ user }) {
   const isCurrent = useSelector((state) => state.chats.current === user._id);
 
   const dispatch = useDispatch();
@@ -34,8 +34,8 @@ function User({ user }) {
   );
 }
 
-User.propTypes = {
+ListUsersItem.propTypes = {
   user: PropTypes.object.isRequired
 };
 
-export default memo(User);
+export default memo(ListUsersItem);

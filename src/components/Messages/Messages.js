@@ -1,89 +1,41 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
-import styled from "styled-components";
-import PropTypes from "prop-types";
-import MessageProvider from "./MessageProvider";
-import { ChatCTX } from "components/Current/CurrentChat";
-import LastMessage from "./LastMessage";
-import useScrollDown from "hooks/useScrollDown";
-
-const Styled = styled.div`
-  overflow-y: auto;
-  height: 100%;
-
-  .message-row {
-    display: flex;
-    padding-bottom: 8px;
-  }
-
-  .message-row.own {
-    justify-content: flex-end;
-  }
-
-  .message {
-    background: #e2e3e5;
-    max-width: 75%;
-  }
-
-  .message .content {
-    max-width: 100%;
-    overflow: hidden;
-  }
-
-  .details {
-    text-align: right;
-  }
-
-  .details .date,
-  .details .state {
-    display: inline-block;
-    font-size: 0.85rem;
-  }
-
-  .message-row.own .message {
-    background-color: #cce5ff;
-  }
-`;
+import Message from "./Message";
+import { getLastIndex, scrollToEnd } from "util/helpers";
 
 export default function Messages() {
-  const [shouldScroll, setShouldScroll] = useState(false);
-  const [scrollRef, scrollDown] = useScrollDown();
-  const chat = useContext(ChatCTX);
+  const chat = useSelector((state) => state.chats.byId[state.chats.current]);
+  const [lastInView, setLastInView] = useState(true);
+  const scrollRef = useRef(null);
 
-  const messages = useSelector(
-    (state) => state.chats.byId[chat].messages,
-    (A, B) => A.length === B.length
-  );
-
-  const onObserve = useCallback((value) => {
-    setShouldScroll(value);
-  }, []);
+  const { messages } = chat;
 
   useEffect(() => {
-    scrollDown();
-  }, [chat, scrollDown]);
+    scrollToEnd(scrollRef.current);
+  }, [chat]);
 
   useEffect(() => {
-    if (shouldScroll) {
-      scrollDown();
+    if (lastInView) {
+      scrollToEnd(scrollRef.current);
     }
-  }, [messages.length, shouldScroll, scrollDown]);
+  }, [messages, lastInView]);
 
-  const ListMessages = messages.map((_id, index) => {
-    if (index === messages.length - 1) {
-      return <LastMessage _id={_id} onObserve={onObserve} key={_id} />;
-    }
-
-    return <MessageProvider _id={_id} key={_id} />;
-  });
+  const lastIndex = getLastIndex(messages);
 
   return (
-    <Styled className="px-2 pt-2" ref={scrollRef}>
-      {ListMessages}
-    </Styled>
+    <div
+      className="px-2 pt-2"
+      style={{ overflowY: "auto", height: "100%" }}
+      ref={scrollRef}
+    >
+      {messages.map((_id, index) => (
+        <Message
+          key={_id}
+          _id={_id}
+          isLast={index === lastIndex}
+          onLastView={setLastInView}
+        />
+      ))}
+    </div>
   );
 }
-
-Messages.propTypes = {
-  chat: PropTypes.string
-};

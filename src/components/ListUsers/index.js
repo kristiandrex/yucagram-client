@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import User from "./User";
+import ListUsersItem from "./ListUsersItem";
 
-export default function Users() {
+export default function ListUsers() {
   const users = useSelector((state) => state.search.users);
 
   if (users.length === 0) {
@@ -14,7 +14,7 @@ export default function Users() {
         Usuarios
       </div>
       {users.map((user) => (
-        <User user={user} key={user._id} />
+        <ListUsersItem user={user} key={user._id} />
       ))}
     </div>
   );

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import MyProfile from "components/Profile/MyProfile";
 import Search from "components/Lateral/Search";
-import Chats from "components/Chats/Chats";
+import ListChats from "components/ListChats";
 import SearchResults from "./SearchResults";
 
 const LateralStyled = styled.div`
@@ -27,7 +27,7 @@ export default function Lateral() {
       <Search />
       <div className="chats-container">
         <SearchResults />
-        <Chats />
+        <ListChats />
       </div>
     </LateralStyled>
   );

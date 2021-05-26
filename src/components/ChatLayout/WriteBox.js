@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { addMessage } from "actions/messages";
-import request from "util/request";
+import { addOutgoingMessage } from "actions/messages";
 
 const StyledWriteBox = styled.div`
   .alert {
@@ -52,10 +51,7 @@ export default function WriteBox() {
       date: new Date()
     };
 
-    request({ method: "post", url: "/auth/messages", data: message })
-      .then((response) => dispatch(addMessage(response.data, chat)))
-      .catch((error) => console.error(error));
-
+    dispatch(addOutgoingMessage(message, chat));
     setText("");
   };
 

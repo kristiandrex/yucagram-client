@@ -1,11 +1,11 @@
 import PropTypes from "prop-types";
 
-export default function MessageState({ seen }) {
+export default function MessageStatus({ seen }) {
   return (
     <span className="state material-icons">{seen ? "done_all" : "done"}</span>
   );
 }
 
-MessageState.propTypes = {
+MessageStatus.propTypes = {
   seen: PropTypes.bool.isRequired
 };

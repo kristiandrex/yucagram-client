@@ -1,11 +1,11 @@
-import { useEffect, useMemo } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
 import Lateral from "components/Lateral/Lateral";
-import Current from "components/Current/Current";
+import ChatLayout from "components/ChatLayout";
 import socket from "util/socket";
-import { messageIn, readMessage } from "actions/messages";
+import { addIncomingMessage, readIncomingMessage } from "actions/messages";
 import bell from "assets/bell.mp3";
 
 const audio = new Audio(bell);
@@ -32,23 +32,23 @@ const StyledHome = styled.div`
 `;
 
 export default function Home() {
-  const totalUnread = useSelector((state) => state.messages.totalUnread);
-  const dispatch = useDispatch();
-
-  const title = useMemo(() => {
+  const title = useSelector((state) => {
+    const { totalUnread } = state.messages;
     return totalUnread > 0 ? `Yucagram (${totalUnread})` : "Yucagram";
-  }, [totalUnread]);
+  });
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const io = socket.get();
 
     io.on("SEND_MESSAGE", (payload) => {
-      dispatch(messageIn(payload));
+      dispatch(addIncomingMessage(payload));
       audio.play();
     });
 
     io.on("READ_MESSAGE", (payload) => {
-      dispatch(readMessage(payload));
+      dispatch(readIncomingMessage(payload));
     });
 
     return () => socket.disconnect();
@@ -61,7 +61,7 @@ export default function Home() {
       </Helmet>
       <StyledHome className="row no-gutters">
         <Lateral />
-        <Current />
+        <ChatLayout />
       </StyledHome>
     </>
   );

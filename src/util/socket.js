@@ -7,7 +7,11 @@ function get() {
   const token = localStorage.getItem("token");
 
   if (!instance && token) {
-    instance = io(SERVER_URL, { extraHeaders: { token } });
+    instance = io(SERVER_URL, {
+      auth: {
+        token: `Bearer ${token}`
+      }
+    });
   }
 
   return instance;

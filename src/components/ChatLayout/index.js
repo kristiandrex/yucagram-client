@@ -1,13 +1,12 @@
-import { useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import User from "./CurrentUser";
-import Chat from "./CurrentChat";
+import NewChat from "./NewChat";
+import IndividualChat from "./IndividualChat";
 import pattern from "assets/pattern.svg";
 import Avatar from "components/Avatar";
 import { closeCurrent } from "actions/chats";
 
-const Styled = styled.div`
+const StyledChatLayout = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -33,7 +32,7 @@ const Styled = styled.div`
   }
 `;
 
-export default function Current() {
+export default function ChatLayout() {
   const current = useSelector((state) => {
     const value = state.chats.current;
 
@@ -44,23 +43,16 @@ export default function Current() {
     return state.chats.byId[value];
   });
 
-  const user = useMemo(() => {
-    if (current?.role === "USER") {
-      return current;
-    }
-
-    return current?.to;
-  }, [current]);
-
+  const user = current?.role === "USER" ? current : current?.to;
   const dispatch = useDispatch();
   const handleClose = () => dispatch(closeCurrent());
 
   if (!current) {
-    return <Styled className="col-12 col-lg-9 col-sm-8" />;
+    return <StyledChatLayout className="col-12 col-lg-9 col-sm-8" />;
   }
 
   return (
-    <Styled className="col-12 col-lg-9 col-sm-8" active>
+    <StyledChatLayout className="col-12 col-lg-9 col-sm-8" active>
       <div className="bg-primary p-2 profile">
         <span
           className="material-icons cursor"
@@ -75,10 +67,10 @@ export default function Current() {
         <span className="username">{user.username}</span>
       </div>
       {current.role === "CHAT" ? (
-        <Chat chat={current} />
+        <IndividualChat />
       ) : (
-        <User user={current} />
+        <NewChat user={current} />
       )}
-    </Styled>
+    </StyledChatLayout>
   );
 }

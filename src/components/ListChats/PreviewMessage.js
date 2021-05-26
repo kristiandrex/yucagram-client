@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import MessageState from "components/Messages/MessageState";
+import MessageStatus from "components/Messages/MessageStatus";
 import { useSelector } from "react-redux";
+import Timestamp from "components/Timestamp";
 
 const Styled = styled.div`
   font-size: 0.85rem;
@@ -27,7 +28,7 @@ const Styled = styled.div`
   }
 `;
 
-export default function Preview({ chat }) {
+export default function PreviewMessage({ chat }) {
   const message = useSelector((state) => {
     const len = chat.messages.length;
 
@@ -43,22 +44,19 @@ export default function Preview({ chat }) {
     return null;
   }
 
-  const time = new Date(message.date);
-  const isOut = message.from === chat.from;
+  const isNotOwn = message.from === chat.from;
 
   return (
     <Styled>
       <div className="content">{message.text}</div>
       <div className="details">
-        {isOut && <MessageState seen={message.seen} />}
-        <span className="date">
-          {time.getHours()}:{time.getMinutes()}
-        </span>
+        {isNotOwn && <MessageStatus seen={message.seen} />}
+        <Timestamp date={message.date} />
       </div>
     </Styled>
   );
 }
 
-Preview.propTypes = {
+PreviewMessage.propTypes = {
   chat: PropTypes.object.isRequired
 };

@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import { CSSTransition } from "react-transition-group";
 import styled from "styled-components";
 import Loading from "components/UI/Loading";
-import Chat from "components/Chats/Chat";
-import User from "components/Users/User";
+import ListChatsItem from "components/ListChats/ListChatsItem";
+import ListUsersItem from "components/ListUsers/ListUsersItem";
 import { useMemo } from "react";
 
 const StyledResults = styled.div`
@@ -50,8 +50,12 @@ export default function SearchResults() {
     return users.length === 0 && chats.length === 0;
   }, [users, chats]);
 
-  const ListChats = chats.map((chat) => <Chat key={chat} _id={chat} />);
-  const ListUsers = users.map((user) => <User key={user._id} user={user} />);
+  const ListChats = chats.map((chat) => (
+    <ListChatsItem key={chat} _id={chat} />
+  ));
+  const ListUsers = users.map((user) => (
+    <ListUsersItem key={user._id} user={user} />
+  ));
 
   //eslint-disable-next-line
   const Title = ({ children }) => {

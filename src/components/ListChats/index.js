@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import styled from "styled-components";
-import Chat from "components/Chats/Chat";
+import ListChatsItem from "components/ListChats/ListChatsItem";
 import Loading from "components/UI/Loading";
 import { loadChats } from "actions/chats";
 import request from "util/request";
@@ -17,7 +17,7 @@ const StyledChats = styled.div`
   }
 `;
 
-export default function Chats() {
+export default function ListChats() {
   const chats = useSelector((state) => state.chats.allIds);
   const [isLoading, setIsLoading] = useState(true);
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ export default function Chats() {
     return <Loading />;
   }
 
-  const ListChats = chats.map((_id) => <Chat key={_id} _id={_id} />);
+  const ListChats = chats.map((_id) => <ListChatsItem key={_id} _id={_id} />);
 
   return (
     <StyledChats>

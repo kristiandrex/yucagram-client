@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 import { createChat } from "actions/chats";
 
-const Styled = styled.div`
+const StyledNewChat = styled.div`
   height: 100%;
 
   .wrapper {
@@ -14,12 +14,12 @@ const Styled = styled.div`
   }
 `;
 
-export default function CurrentUser({ user }) {
+export default function NewChat({ user }) {
   const dispatch = useDispatch();
   const handleAdd = () => dispatch(createChat(user));
 
   return (
-    <Styled>
+    <StyledNewChat>
       <div className="wrapper">
         <div className="card">
           <div className="card-body">
@@ -29,10 +29,10 @@ export default function CurrentUser({ user }) {
           </div>
         </div>
       </div>
-    </Styled>
+    </StyledNewChat>
   );
 }
 
-CurrentUser.propTypes = {
+NewChat.propTypes = {
   user: PropTypes.object.isRequired
 };
